@@ -1,3 +1,6 @@
+autofix:
+	php vendor/bin/phpcbf --standard=dev/phpcs.xml --basepath=$(PWD) src
+
 db:
 	sqlite3 var/database.sqlite
 
@@ -14,7 +17,7 @@ lint-phpstan:
 	vendor/bin/phpstan --configuration=dev/phpstan.neon analyze --no-progress --no-ansi src
 
 phpunit:
-	php vendor/bin/phpunit --testsuite unit 2>var/phpunit-errors.log
+	APP_ENV=unit_tests php vendor/bin/phpunit --testsuite unit 2>var/phpunit-errors.log
 
 schema:
 
