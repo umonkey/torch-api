@@ -15,6 +15,12 @@ use Generator;
 interface DatabaseInterface
 {
     /**
+     * @param array<string,mixed> $props
+     * @throws DatabaseException
+     */
+    public function add(string $tableName, array $props): void;
+
+    /**
      * Return a single record, identified by a PK or PK+SK.
      *
      * @param array<string,array<string,mixed>> $keys

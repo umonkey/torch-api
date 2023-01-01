@@ -77,17 +77,13 @@ class SqlUtilsTests extends AbstractTestCase
     public function testBuildInsert(): void
     {
         $res = SqlUtils::buildInsert('foobar', [
-            'id = :id' => [
-                ':id' => 'foo',
-            ],
-            'views = :views' => [
-                ':views' => 2,
-            ],
+            'id' => 'foo',
+            'views' => 2,
         ]);
 
         self::assertEquals(2, count($res));
 
-        self::assertEquals("INSERT INTO `foobar` (`id`, `views`) VALUES (?, ?)", $res[0]);
+        self::assertEquals("INSERT INTO `foobar` (`id`, `views`) VALUES (:id, :views)", $res[0]);
 
         self::assertEquals([
             ':id' => 'foo',

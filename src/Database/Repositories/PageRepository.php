@@ -29,4 +29,13 @@ class PageRepository
 
         return new PageEntity($row);
     }
+
+    /**
+     * @throws DatabaseException
+     */
+    public function add(PageEntity $page): void
+    {
+        $row = $page->serialize();
+        $this->db->add(self::TABLE_NAME, $row);
+    }
 }

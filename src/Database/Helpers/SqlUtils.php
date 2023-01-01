@@ -32,19 +32,19 @@ class SqlUtils
         $conditions = [];
 
         foreach ($where as $k => $v) {
-            if (is_array($v)) {
-                foreach ($v as $_k => $_v) {
-                    if ($_k[0] === '#') {
-                        // Field alias.
-                        $fieldMap[$_k] = sprintf("`%s`", $_v);
-                    } else {
-                        // Regular param.  Just escape the field name.
-                        $conditions[] = self::escapeCondition($k);
-                        $params[$_k] = $_v;
-                    }
-                }
-            } else {
+            if (!is_array($v)) {
                 throw new DatabaseException('malformed condition');
+            }
+
+            foreach ($v as $_k => $_v) {
+                if ($_k[0] === '#') {
+                    // Field alias.
+                    $fieldMap[$_k] = sprintf("`%s`", $_v);
+                } else {
+                    // Regular param.  Just escape the field name.
+                    $conditions[] = self::escapeCondition($k);
+                    $params[$_k] = $_v;
+                }
             }
         }
 
@@ -110,9 +110,10 @@ class SqlUtils
         $_params = [];
 
         foreach ($props as $k => $v) {
-            $_fields[] = sprintf("`%s`", self::extractFieldName($k));
-            $_params = array_replace($_params, $v);
-            $_marks[] = "?";
+            $f = self::extractFieldName($k);
+            $_fields[] = sprintf("`%s`", $f);
+            $_params[sprintf(':%s', $f)] = $v;
+            $_marks[] = sprintf(':%s', $f);
         }
 
         $_fields = implode(", ", $_fields);

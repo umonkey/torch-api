@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace App\Middleware;
 
 use App\Exceptions\AbstractException;
-use Bugsnag\Client as BugsnagClient;
 use ErrorException;
 use InvalidArgumentException;
 use Invoker\Exception\NotCallableException;

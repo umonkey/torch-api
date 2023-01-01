@@ -7,6 +7,7 @@ namespace App\Database\Drivers;
 use App\Core\Config;
 use App\Database\DatabaseInterface;
 use App\Database\Exceptions\DatabaseException;
+use App\Database\Exceptions\DuplicateRecordException;
 use App\Database\Exceptions\RecordNotFoundException;
 use App\Database\Helpers\SqlUtils;
 use App\Exceptions\ConfigException;
@@ -17,7 +18,7 @@ use PDOStatement;
 
 class SqliteDriver implements DatabaseInterface
 {
-    private PDO $conn;
+    protected PDO $conn;
 
     /**
      * @throws ConfigException
@@ -25,13 +26,29 @@ class SqliteDriver implements DatabaseInterface
      */
     public function __construct(Config $config)
     {
-        $dsn = $config->requireString('sqlite.path');
+        $dsn = $this->getDSN($config);
 
         try {
             $conn = new PDO($dsn, null, null, static::getConnectionOptions());
             $this->conn = $conn;
         } catch (PDOException $e) {
             throw new DatabaseException(sprintf('connection failed: %s', $e->getMessage()));
+        }
+    }
+
+    /**
+     * @param array<string,mixed> $props
+     * @throws DatabaseException
+     */
+    public function add(string $tableName, array $props): void
+    {
+        [$query, $params] = SqlUtils::buildInsert($tableName, $props);
+
+        $st = $this->query($query, $params);
+        $count = $st->rowCount();
+
+        if ($count === 0) {
+            throw new DatabaseException('error inserting a new record');
         }
     }
 
@@ -62,6 +79,14 @@ class SqliteDriver implements DatabaseInterface
         }
 
         throw new RecordNotFoundException();
+    }
+
+    /**
+     * @throws ConfigException
+     */
+    protected function getDSN(Config $config): string
+    {
+        return $config->requireString('sqlite.path');
     }
 
     /**
@@ -111,7 +136,18 @@ class SqliteDriver implements DatabaseInterface
             $sth->execute($params);
             return $sth;
         } catch (PDOException $e) {
-            throw new DatabaseException($e->getMessage());
+            throw $this->wrapException($e);
         }
+    }
+
+    protected function wrapException(PDOException $e): DatabaseException
+    {
+        $msg = $e->getMessage();
+
+        if (str_contains($msg, 'UNIQUE constraint failed')) {
+            return new DuplicateRecordException();
+        }
+
+        return new DatabaseException($e->getMessage());
     }
 }

@@ -52,9 +52,9 @@ class PageEntity extends AbstractEntity
         parent::setInt('created', $value);
     }
 
-    public function setId(int $value): void
+    public function setId(string $value): void
     {
-        parent::setInt('id', $value);
+        parent::setString('id', $value);
     }
 
     public function setText(string $value): void

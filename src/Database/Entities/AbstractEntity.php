@@ -5,13 +5,9 @@ declare(strict_types=1);
 namespace App\Database\Entities;
 
 use App\Database\Exceptions\DatabaseException;
-use App\Exceptions\BadRequestException;
 
 abstract class AbstractEntity
 {
-    /**
-     * @var array<string,string[]>
-     */
     protected const PROP_TYPES = [];
 
     /**
@@ -22,9 +18,17 @@ abstract class AbstractEntity
     /**
      * @param array<string,mixed> $props
      */
-    public function __construct(array $props)
+    public function __construct(array $props = [])
     {
         $this->props = array_replace(static::getDefaults(), $props);
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function serialize(): array
+    {
+        return $this->props;
     }
 
     public function validate(): void
