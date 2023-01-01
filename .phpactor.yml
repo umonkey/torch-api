@@ -1,0 +1,6 @@
+indexer.index_path: "%project_root%/var/phpactor_index"
+indexer.include_patterns:
+  - "/src/*.php"
+  - "/src/**/*.php"
+indexer.exclude_patterns:
+  - "/src/**/*Tests.php"

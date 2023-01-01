@@ -1,0 +1,38 @@
+# For disallowed calls, see this:
+# https://github.com/spaze/phpstan-disallowed-calls
+
+includes:
+    - ../vendor/phpstan/phpstan-strict-rules/rules.neon
+    - ../vendor/spaze/phpstan-disallowed-calls/extension.neon
+    - ../vendor/phpstan/phpstan/conf/bleedingEdge.neon
+    - ../vendor/phpstan/phpstan-phpunit/extension.neon
+    - ../vendor/phpstan/phpstan-phpunit/rules.neon
+
+services:
+    - class: SlamPhpStan\UnusedVariableRule
+      tags:
+          - phpstan.rules.rule
+parameters:
+    level: 8
+    checkMissingIterableValueType: false
+    checkUninitializedProperties: false
+    parallel:
+        maximumNumberOfProcesses: 1
+    bootstrapFiles:
+        - phpstan-constants.php
+    dynamicConstantNames:
+        - APP_ENV
+        - APP_STAGE
+        - REQUEST_START_CPU_USEC
+        - REQUEST_START_CPU_SEC
+    disallowedFunctionCalls:
+        - function: 'dd()'
+          message: 'remove before commit'
+    checkGenericClassInNonGenericObjectType: false
+    exceptions:
+        check:
+            missingCheckedExceptionInThrows: true
+            tooWideThrowType: true
+    excludePaths:
+        - ../bin/rr
+    tmpDir: ../var/cache/phpstan

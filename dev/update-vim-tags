@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+CTAGS=ctags-universal
+
+if ! which $CTAGS >/dev/null ; then
+    echo "$CTAGS not installed, try: sudo apt install exuberant-ctags" >&1
+    exit 1
+fi
+
+echo "Rebuilding ctags (see doc/HOWTO_dev.md)"
+rm -f .tags
+
+$CTAGS -f .tags -h ".php" -R --tag-relative=yes --fields="+aimlS" --languages=php --PHP-kinds="+cdfint-av" --exclude="*Tests.php" --exclude=".git" src
