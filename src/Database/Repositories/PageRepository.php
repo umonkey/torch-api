@@ -19,6 +19,15 @@ class PageRepository
     /**
      * @throws DatabaseException
      */
+    public function add(PageEntity $page): void
+    {
+        $row = $page->serialize();
+        $this->db->add(self::TABLE_NAME, $row);
+    }
+
+    /**
+     * @throws DatabaseException
+     */
     public function get(string $id): PageEntity
     {
         $row = $this->db->get(self::TABLE_NAME, [
@@ -33,9 +42,15 @@ class PageRepository
     /**
      * @throws DatabaseException
      */
-    public function add(PageEntity $page): void
+    public function update(PageEntity $page): void
     {
-        $row = $page->serialize();
-        $this->db->add(self::TABLE_NAME, $row);
+        $this->db->update(self::TABLE_NAME, [
+            'id = :id' => [
+                ':id' => $page->getId(),
+            ],
+        ], [
+            'updated' => $page->getUpdated(),
+            'text' => $page->getText(),
+        ]);
     }
 }

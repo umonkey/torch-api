@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Pages;
 
+use App\Database\Entities\PageEntity;
 use App\Database\Exceptions\DatabaseException;
 use App\Database\Exceptions\RecordNotFoundException;
 use App\Database\Repositories\PageRepository;
@@ -34,6 +35,27 @@ class Pages
                 ->withHTML((string)$html);
         } catch (RecordNotFoundException) {
             throw new PageNotFoundException();
+        }
+    }
+
+    /**
+     * @throws DatabaseException
+     */
+    public function put(string $id, string $text): void
+    {
+        try {
+            $page = $this->pages->get($id);
+            $page->setText($text);
+            $page->setUpdated(time());
+
+            $this->pages->update($page);
+        } catch (RecordNotFoundException) {
+            $page = new PageEntity();
+            $page->setId($id);
+            $page->setText($text);
+            $page->setUpdated(time());
+
+            $this->pages->add($page);
         }
     }
 }

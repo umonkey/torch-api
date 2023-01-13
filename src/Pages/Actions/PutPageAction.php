@@ -5,21 +5,17 @@ declare(strict_types=1);
 namespace App\Pages\Actions;
 
 use App\Core\AbstractAction;
-use App\Core\QueryObject;
+use App\Core\FormObject;
 use App\Database\Exceptions\DatabaseException;
 use App\Exceptions\BadRequestException;
-use App\Exceptions\PageNotFoundException;
 use App\Pages\Pages;
-use App\Pages\Responders\PageResponder;
 use InvalidArgumentException;
-use JsonException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use RuntimeException;
 
-class GetPageAction extends AbstractAction
+class PutPageAction extends AbstractAction
 {
-    public function __construct(private readonly Pages $pages, private readonly PageResponder $responder)
+    public function __construct(private readonly Pages $pages)
     {
     }
 
@@ -27,18 +23,16 @@ class GetPageAction extends AbstractAction
      * @throws BadRequestException
      * @throws DatabaseException
      * @throws InvalidArgumentException
-     * @throws JsonException
-     * @throws PageNotFoundException
-     * @throws RuntimeException
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $query = QueryObject::fromRequest($request);
+        $form = FormObject::fromJSON($request);
 
         $id = $this->getRouteArg($request, 'id');
+        $text = $form->requireString('value');
 
-        $page = $this->pages->get($id);
+        $this->pages->put($id, $text);
 
-        return $this->responder->respond($response, $page);
+        return $response->withStatus(202);
     }
 }

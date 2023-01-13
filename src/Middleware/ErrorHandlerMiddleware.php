@@ -115,7 +115,7 @@ class ErrorHandlerMiddleware
             ],
         ];
 
-        if (APP_ENV !== 'production') {
+        if (\APP_ENV !== 'production') {
             $response['error']['debug'] = [
                 'class' => $e::class,
                 'file' => $e->getFile(),

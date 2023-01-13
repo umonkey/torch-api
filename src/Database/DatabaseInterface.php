@@ -35,4 +35,13 @@ interface DatabaseInterface
      * @throws DatabaseException
      */
     public function find(string $tableName, array $query): Generator;
+
+    /**
+     * Update a single record, identified by a PK or PK+SK.
+     *
+     * @param array<string,array<string,mixed>> $keys
+     * @param array<string,mixed> $props
+     * @throws DatabaseException
+     */
+    public function update(string $tableName, array $keys, array $props): void;
 }

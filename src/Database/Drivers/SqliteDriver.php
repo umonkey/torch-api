@@ -81,6 +81,18 @@ class SqliteDriver implements DatabaseInterface
         throw new RecordNotFoundException();
     }
 
+    public function update(string $tableName, array $keys, array $props): void
+    {
+        [$query, $params] = SqlUtils::buildUpdate($tableName, $keys, $props);
+
+        $sth = $this->query($query, $params);
+        $count = $sth->rowCount();
+
+        if ($count === 0) {
+            throw new RecordNotFoundException();
+        }
+    }
+
     /**
      * @throws ConfigException
      */
