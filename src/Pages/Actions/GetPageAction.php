@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Pages\Actions;
 
 use App\Core\AbstractAction;
-use App\Core\QueryObject;
 use App\Database\Exceptions\DatabaseException;
 use App\Exceptions\BadRequestException;
 use App\Exceptions\PageNotFoundException;
@@ -33,8 +32,6 @@ class GetPageAction extends AbstractAction
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $query = QueryObject::fromRequest($request);
-
         $id = $this->getRouteArg($request, 'id');
 
         $page = $this->pages->get($id);

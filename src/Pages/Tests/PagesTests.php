@@ -6,6 +6,7 @@ namespace App\Pages\Tests;
 
 use App\Core\AbstractTestCase;
 use App\Core\Config;
+use App\Core\Logging\ConsoleLogger;
 use App\Database\Drivers\MemoryDriver;
 use App\Database\Entities\PageEntity;
 use App\Database\Exceptions\DatabaseException;
@@ -54,8 +55,14 @@ class PagesTests extends AbstractTestCase
         $config = new Config();
         $db = new MemoryDriver($config);
         $md = new CommonMarkConverter();
+        $logger = new ConsoleLogger($config);
 
         $this->repo = new PageRepository($db);
-        $this->pages = new Pages($md, $this->repo);
+
+        $this->pages = new Pages(
+            md: $md,
+            logger: $logger,
+            pages: $this->repo,
+        );
     }
 }
