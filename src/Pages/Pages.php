@@ -11,12 +11,16 @@ use App\Database\Repositories\PageRepository;
 use App\Exceptions\PageNotFoundException;
 use App\Pages\Objects\PageObject;
 use League\CommonMark\CommonMarkConverter;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 
 class Pages
 {
-    public function __construct(private readonly CommonMarkConverter $md, private readonly PageRepository $pages)
-    {
+    public function __construct(
+        private readonly CommonMarkConverter $md,
+        private readonly LoggerInterface $logger,
+        private readonly PageRepository $pages,
+    ) {
     }
 
     /**
@@ -49,6 +53,10 @@ class Pages
             $page->setUpdated(time());
 
             $this->pages->update($page);
+
+            $this->logger->info('Page updated.', [
+                'id' => $id,
+            ]);
         } catch (RecordNotFoundException) {
             $page = new PageEntity();
             $page->setId($id);
@@ -56,6 +64,10 @@ class Pages
             $page->setUpdated(time());
 
             $this->pages->add($page);
+
+            $this->logger->info('Page created.', [
+                'id' => $id,
+            ]);
         }
     }
 }
