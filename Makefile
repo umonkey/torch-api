@@ -19,7 +19,8 @@ lint-phpstan:
 phpunit:
 	APP_ENV=unit_tests php vendor/bin/phpunit --testsuite unit 2>var/phpunit-errors.log
 
-schema:
+schema-sqlite:
+	sqlite3 var/database.sqlite < config/schema-sqlite.sql
 
 serve:
 	php -S localhost:8000 -t public src/bootstrap-builtin.php
