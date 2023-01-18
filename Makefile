@@ -28,4 +28,4 @@ serve:
 tags:
 	dev/update-vim-tags
 
-test: phpunit
+test: lint phpunit

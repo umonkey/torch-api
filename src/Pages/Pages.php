@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Pages;
 
 use App\Database\Entities\PageEntity;
+use App\Database\Entities\UserEntity;
 use App\Database\Exceptions\DatabaseException;
 use App\Database\Exceptions\RecordNotFoundException;
 use App\Database\Repositories\PageRepository;
@@ -45,7 +46,7 @@ class Pages
     /**
      * @throws DatabaseException
      */
-    public function put(string $id, string $text): void
+    public function put(string $id, string $text, UserEntity $user): void
     {
         try {
             $page = $this->pages->get($id);
@@ -56,6 +57,7 @@ class Pages
 
             $this->logger->info('Page updated.', [
                 'id' => $id,
+                'user' => $user->getId(),
             ]);
         } catch (RecordNotFoundException) {
             $page = new PageEntity();
@@ -67,6 +69,7 @@ class Pages
 
             $this->logger->info('Page created.', [
                 'id' => $id,
+                'user' => $user->getId(),
             ]);
         }
     }

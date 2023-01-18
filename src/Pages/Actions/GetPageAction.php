@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Pages\Actions;
 
+use App\Auth\AuthInterface;
 use App\Core\AbstractAction;
 use App\Database\Exceptions\DatabaseException;
 use App\Exceptions\BadRequestException;
@@ -18,8 +19,11 @@ use RuntimeException;
 
 class GetPageAction extends AbstractAction
 {
-    public function __construct(private readonly Pages $pages, private readonly PageResponder $responder)
-    {
+    public function __construct(
+        private readonly AuthInterface $auth,
+        private readonly Pages $pages,
+        private readonly PageResponder $responder,
+    ) {
     }
 
     /**
@@ -32,6 +36,8 @@ class GetPageAction extends AbstractAction
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
+        $this->auth->authenticate($request);
+
         $id = $this->getRouteArg($request, 'id');
 
         $page = $this->pages->get($id);

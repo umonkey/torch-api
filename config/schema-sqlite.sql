@@ -5,3 +5,12 @@ CREATE TABLE IF NOT EXISTS `pages` (
     `text` TEXT NOT NULL,
     PRIMARY KEY(`id`)
 );
+
+CREATE TABLE IF NOT EXISTS `users` (
+    `id` TEXT NOT NULL,
+    `created_at` INT NOT NULL,
+    `login_at` INT NOT NULL,
+    `email` TEXT NOT NULL,
+    `password` TEXT NOT NULL,
+    PRIMARY KEY(`id`)
+);

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Auth\AuthInterface;
+use App\Auth\DefaultAuthClient;
 use App\Core\Config\Environment;
 use App\Core\Logging\ConsoleLogger;
 use App\Database\DatabaseInterface;
@@ -11,6 +13,10 @@ use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
 return [
+    AuthInterface::class => function (ContainerInterface $container) {
+        return $container->get(DefaultAuthClient::class);
+    },
+
     DatabaseInterface::class => function (ContainerInterface $container) {
         $env = $container->get(Environment::class);
 
