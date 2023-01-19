@@ -29,7 +29,7 @@ class Config
         $value = $this->props[$key] ?? $default;
 
         if ($value !== null && !is_int($value)) {
-            throw new ConfigException('config value must be an integer');
+            throw new ConfigException(sprintf('config value for "%s" must be an integer', $key));
         }
 
         return $value;
@@ -43,7 +43,7 @@ class Config
         $value = $this->props[$key] ?? null;
 
         if ($value !== null && !is_string($value)) {
-            throw new ConfigException('config value must be a string');
+            throw new ConfigException(sprintf('config value for "%s" must be a string', $key));
         }
 
         return $value;
@@ -55,7 +55,7 @@ class Config
     public function requireString(string $key): string
     {
         return $this->getString($key)
-            ?? throw new ConfigException('config value not set');
+            ?? throw new ConfigException(sprintf('config value "%s" not set', $key));
     }
 
     /**

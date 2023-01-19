@@ -7,7 +7,8 @@
         "slim/psr7": "^1.6",
         "php-di/slim-bridge": "^3.2",
         "spiral/roadrunner": "^2.12",
-        "league/commonmark": "^2.3"
+        "league/commonmark": "^2.3",
+        "firebase/php-jwt": "^6.3"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.4",

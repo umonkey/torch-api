@@ -29,11 +29,16 @@ class Pages
      * @throws PageNotFoundException
      * @throws RuntimeException
      */
-    public function get(string $key): PageObject
+    public function get(string $key, UserEntity $user): PageObject
     {
         try {
             $page = $this->pages->get($key);
             $html = $this->md->convert($page->getText());
+
+            $this->logger->debug('User reads page.', [
+                'page' => $key,
+                'user' => $user->getId(),
+            ]);
 
             return (new PageObject())
                 ->withEntity($page)

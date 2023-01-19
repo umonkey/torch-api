@@ -9,6 +9,7 @@ use App\Core\Config;
 use App\Core\Logging\ConsoleLogger;
 use App\Database\Drivers\MemoryDriver;
 use App\Database\Entities\PageEntity;
+use App\Database\Entities\UserEntity;
 use App\Database\Exceptions\DatabaseException;
 use App\Database\Repositories\PageRepository;
 use App\Exceptions\ConfigException;
@@ -38,7 +39,10 @@ class PagesTests extends AbstractTestCase
 
         $this->repo->add($page);
 
-        $res = $this->pages->get($page->getId());
+        $user = new UserEntity();
+        $user->setId('phpunit');
+
+        $res = $this->pages->get($page->getId(), $user);
         $props = $res->serialize();
 
         self::assertEquals("<h1>hello</h1>\n", $props['html']);

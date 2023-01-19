@@ -36,11 +36,11 @@ class GetPageAction extends AbstractAction
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $this->auth->authenticate($request);
+        $user = $this->auth->authenticate($request);
 
         $id = $this->getRouteArg($request, 'id');
 
-        $page = $this->pages->get($id);
+        $page = $this->pages->get($id, $user);
 
         return $this->responder->respond($response, $page);
     }
