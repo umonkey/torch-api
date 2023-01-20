@@ -15,6 +15,7 @@ class Environment
 
     public function __construct()
     {
+        $this->props = $this->load();
     }
 
     public function get(string $key): ?string
@@ -38,6 +39,37 @@ class Environment
     public function req(string $key): string
     {
         return $this->get($key)
-            ?? throw new ConfigException('environment variable not set');
+            ?? throw new ConfigException(sprintf('environment variable "%s" not set', $key));
+    }
+
+    /**
+     * @return array<string,string>
+     * @throws ConfigException
+     */
+    private function load(): array
+    {
+        $source = '.env.php';
+
+        if (!file_exists($source)) {
+            return [];
+        }
+
+        $data = include $source;
+
+        if (!is_array($data)) {
+            throw new ConfigException('.env.php must return an array');
+        }
+
+        foreach ($data as $k => $v) {
+            if (!is_string($k)) {
+                throw new ConfigException('environment keys must be strings');
+            }
+
+            if (!is_string($v)) {
+                throw new ConfigException('environment values must be strings');
+            }
+        }
+
+        return $data;
     }
 }

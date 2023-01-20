@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Core;
 
+use App\Core\Config\Environment;
 use App\Exceptions\ConfigException;
 
 class Config
@@ -73,6 +74,8 @@ class Config
         if (!is_readable($fn)) {
             throw new ConfigException('config file is not readable');
         }
+
+        $env = new Environment();
 
         $data = include $fn;
 
