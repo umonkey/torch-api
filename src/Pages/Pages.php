@@ -11,14 +11,13 @@ use App\Database\Exceptions\RecordNotFoundException;
 use App\Database\Repositories\PageRepository;
 use App\Exceptions\PageNotFoundException;
 use App\Pages\Objects\PageObject;
-use League\CommonMark\CommonMarkConverter;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 
 class Pages
 {
     public function __construct(
-        private readonly CommonMarkConverter $md,
+        readonly Markdown $md,
         private readonly LoggerInterface $logger,
         private readonly PageRepository $pages,
     ) {

@@ -14,9 +14,9 @@ use App\Database\Exceptions\DatabaseException;
 use App\Database\Repositories\PageRepository;
 use App\Exceptions\ConfigException;
 use App\Exceptions\PageNotFoundException;
+use App\Pages\Markdown;
 use App\Pages\Pages;
 use InvalidArgumentException;
-use League\CommonMark\CommonMarkConverter;
 use RuntimeException;
 
 class PagesTests extends AbstractTestCase
@@ -58,7 +58,7 @@ class PagesTests extends AbstractTestCase
 
         $config = new Config();
         $db = new MemoryDriver($config);
-        $md = new CommonMarkConverter();
+        $md = new Markdown();
         $logger = new ConsoleLogger($config);
 
         $this->repo = new PageRepository($db);
