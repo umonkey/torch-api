@@ -41,7 +41,7 @@ class Pages
 
             return (new PageObject())
                 ->withEntity($page)
-                ->withHTML((string)$html);
+                ->withHTML($html);
         } catch (RecordNotFoundException) {
             throw new PageNotFoundException();
         }
