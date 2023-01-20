@@ -22,6 +22,7 @@ class Markdown
         $env = new Environment([
             'heading_permalink' => [
                 'symbol' => '#',
+                'min_heading_level' => 2,
             ],
 
             'table_of_contents' => [
