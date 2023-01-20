@@ -10,6 +10,6 @@ map <F6> :call LintStan()<CR>
 function! LintStan()
   setlocal efm=%f:%l:%m
   wall
-  cexpr system('make lint')
+  cexpr system('dev/vim-lint')
   copen
 endfunction

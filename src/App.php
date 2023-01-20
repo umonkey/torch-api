@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Exceptions\ConfigException;
 use DI\Bridge\Slim\Bridge;
 use DI\ContainerBuilder;
 use Psr\Http\Message\ResponseFactoryInterface;

@@ -1,0 +1,172 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+function strip_path(string $value): string
+{
+    $base = getcwd();
+
+    if (str_starts_with($value, $base)) {
+        $value = substr($value, strlen($base) + 1);
+    }
+
+    return $value;
+}
+
+/**
+ * @param string[] $params
+ * @return string[]
+ */
+function run_command(array $params): array
+{
+    $params = array_map(static fn (string $param): string => escapeshellarg($param), $params);
+    $command = implode(' ', $params);
+
+    exec($command, $output, $exitCode);
+
+    return $output;
+}
+
+/**
+ * @param string[] $lines
+ * @return array<mixed>
+ * @throws JsonException
+ */
+function parse_phpstan_output(array $lines): array
+{
+    $errors = [];
+
+    $text = implode('', $lines);
+    $data = json_decode($text, true, 512, \JSON_THROW_ON_ERROR);
+
+    foreach ($data['files'] as $fileName => $messages) {
+        foreach ($messages['messages'] as $message) {
+            $errors[] = [
+                'file' => strip_path($fileName),
+                'line' => $message['line'],
+                'message' => $message['message'],
+            ];
+        }
+    }
+
+    return $errors;
+}
+
+
+/**
+ * @param string[] $lines
+ * @return array<mixed>
+ * @throws JsonException
+ */
+function parse_phpcs_output(array $lines): array
+{
+    $text = implode('', $lines);
+    $data = json_decode($text, true, 512, \JSON_THROW_ON_ERROR);
+
+    $errors = [];
+
+    foreach ($data['files'] as $fileName => $fileInfo) {
+        foreach ($fileInfo['messages'] as $message) {
+            $errors[] = [
+                'file' => strip_path($fileName),
+                'line' => $message['line'],
+                'message' => $message['message'],
+            ];
+        }
+    }
+
+    return $errors;
+}
+
+
+/**
+ * @param string[] $paths
+ * @return array<mixed>
+ */
+function run_phpstan(string $command, string $config, array $paths): array
+{
+    $output = run_command([
+        $command,
+        '--configuration=' . $config,
+        '--error-format=json',
+        'analyze',
+        '--no-progress',
+        '--no-ansi',
+        ... $paths,
+    ]);
+
+    return parse_phpstan_output($output);
+}
+
+
+/**
+ * @param string[] $paths
+ * @return array<mixed>
+ */
+function run_phpcs(string $command, string $config, array $paths): array
+{
+    $output = run_command([
+        $command,
+        '-s',
+        '-q',
+        '--report=json',
+        '--no-colors',
+        '--standard=' . $config,
+        '--basepath=' . getcwd(),
+        ... $paths,
+    ]);
+
+    return parse_phpcs_output($output);
+}
+
+
+function format_errors(array $errors): void
+{
+    $output = "";
+
+    usort($errors, function (array $a, array $b): int {
+        if ($a['file'] !== $b['file']) {
+            return $a['file'] <=> $b['file'];
+        }
+
+        return $a['line'] <=> $b['line'];
+    });
+
+    foreach ($errors as $error) {
+        $output .= sprintf("%s:%d:%s\n", $error['file'], $error['line'], $error['message']);
+    }
+
+    echo $output;
+}
+
+
+function find_sources(): array
+{
+    $patterns = [
+        'bin/app',
+        'config',
+        'src',
+        'tests',
+        'tests',
+    ];
+
+    $paths = array_filter($patterns, static fn (string $src): bool => file_exists($src));
+
+    return $paths;
+}
+
+
+$paths = find_sources();
+
+$errors = [];
+
+if (file_exists('vendor/bin/phpstan')) {
+    $errors = [...$errors, ...run_phpstan('vendor/bin/phpstan', 'dev/phpstan.neon', $paths)];
+}
+
+if (file_exists('vendor/bin/phpcs')) {
+    $errors = [...$errors, ...run_phpcs('vendor/bin/phpcs', 'dev/phpcs.xml', $paths)];
+}
+
+format_errors($errors);

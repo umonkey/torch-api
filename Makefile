@@ -10,11 +10,11 @@ lint-composer:
 	composer validate --strict
 
 lint-phpcs:
-	vendor/bin/phpcs -s --standard=dev/phpcs.xml --basepath=$(PWD) src
+	vendor/bin/phpcs -s --standard=dev/phpcs.xml --basepath=$(PWD) src config
 
 lint-phpstan:
 	mkdir -p var/cache/phpstan
-	vendor/bin/phpstan --configuration=dev/phpstan.neon analyze --no-progress --no-ansi src
+	vendor/bin/phpstan --configuration=dev/phpstan.neon analyze --no-progress --no-ansi src config
 
 phpunit:
 	APP_ENV=unit_tests php vendor/bin/phpunit --testsuite unit 2>var/phpunit-errors.log

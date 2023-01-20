@@ -13,6 +13,9 @@ class Environment
      */
     private array $props = [];
 
+    /**
+     * @throws ConfigException
+     */
     public function __construct()
     {
         $this->props = $this->load();

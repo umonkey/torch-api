@@ -75,6 +75,9 @@ class Config
             throw new ConfigException('config file is not readable');
         }
 
+        /**
+         * @phpstan-ignore-next-line
+         */
         $env = new Environment();
 
         $data = include $fn;

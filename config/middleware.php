@@ -4,7 +4,7 @@
  * Add middleware helpers.
  *
  * @var Slim\App $app Application to add the middleware to.
- * @var Redgifs\Helpers\Config $config Configuration container.
+ * @var App\Core\Config $config Configuration container.
  **/
 
 declare(strict_types=1);

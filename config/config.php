@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @var App\Core\Config\Environment $env
+ */
+
 declare(strict_types=1);
 
 return [
