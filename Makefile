@@ -1,6 +1,11 @@
 autofix:
 	php vendor/bin/phpcbf --standard=dev/phpcs.xml --basepath=$(PWD) src
 
+deploy:
+	composer install --no-dev
+	composer dump-autoload -o
+	rsync -avzub -e ssh config public src vendor $(DEPLOY_REMOTE)
+
 db:
 	sqlite3 var/database.sqlite
 
