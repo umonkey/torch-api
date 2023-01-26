@@ -51,28 +51,33 @@ class Environment
      */
     private function load(): array
     {
-        $source = '.env.php';
+        $sources = [
+            '.env.php',
+            '../.env.php',
+        ];
 
-        if (!file_exists($source)) {
-            return [];
-        }
+        foreach ($sources as $source) {
+            if (file_exists($source)) {
+                $data = include $source;
 
-        $data = include $source;
+                if (!is_array($data)) {
+                    throw new ConfigException('.env.php must return an array');
+                }
 
-        if (!is_array($data)) {
-            throw new ConfigException('.env.php must return an array');
-        }
+                foreach ($data as $k => $v) {
+                    if (!is_string($k)) {
+                        throw new ConfigException('environment keys must be strings');
+                    }
 
-        foreach ($data as $k => $v) {
-            if (!is_string($k)) {
-                throw new ConfigException('environment keys must be strings');
+                    if (!is_string($v)) {
+                        throw new ConfigException('environment values must be strings');
+                    }
+                }
+
+                return $data;
             }
-
-            if (!is_string($v)) {
-                throw new ConfigException('environment values must be strings');
-            }
         }
 
-        return $data;
+        return [];
     }
 }
