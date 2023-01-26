@@ -52,8 +52,8 @@ class Environment
     private function load(): array
     {
         $sources = [
-            '.env.php',
-            '../.env.php',
+            __DIR__ . '/../../../.env.php',
+            __DIR__ . '/../../../../.env.php',
         ];
 
         foreach ($sources as $source) {

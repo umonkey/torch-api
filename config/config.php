@@ -12,5 +12,5 @@ return [
 
     'log.group' => 'api',
 
-    'sqlite.path' => sprintf('sqlite://%s', __DIR__ . '/../var/database.sqlite'),
+    'sqlite.path' => $env->req('SQLITE_PATH'),
 ];
