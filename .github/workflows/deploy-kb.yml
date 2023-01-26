@@ -1,4 +1,4 @@
-name: deploy-live
+name: deploy-kb
 
 on:
   push:
