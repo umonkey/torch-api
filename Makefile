@@ -2,9 +2,12 @@ autofix:
 	php vendor/bin/phpcbf --standard=dev/phpcs.xml --basepath=$(PWD) src
 
 deploy:
+ifndef WIKI_API_DEPLOY_REMOTE
+	$(error WIKI_API_DEPLOY_REMOTE not defined)
+endif
 	composer install --no-dev
 	composer dump-autoload -o
-	rsync -avzub -e ssh config public src vendor $(DEPLOY_REMOTE)
+	rsync -avzu --delete --delete-after -e "ssh -o StrictHostKeyChecking=no" config public src vendor $(WIKI_API_DEPLOY_REMOTE)
 
 db:
 	sqlite3 var/database.sqlite

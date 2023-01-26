@@ -1,0 +1,45 @@
+name: deploy-live
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP version
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      - name: Validate composer files
+        run: composer validate --strict
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${DEPLOY_KEY}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Build and deploy
+        run: make deploy
+        env:
+          WIKI_API_DEPLOY_REMOTE: ${{ secrets.DEPLOY_REMOTE }}
+
+# vim: set ts=2 sts=2 sw=2 et:
