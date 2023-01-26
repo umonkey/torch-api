@@ -12,7 +12,7 @@ use App\Pages\Actions\GetPageAction;
 use App\Pages\Actions\PutPageAction;
 use Slim\Routing\RouteCollectorProxy;
 
-$app->group('/api/v1', function (RouteCollectorProxy $group) {
+$app->group('/v1', function (RouteCollectorProxy $group) {
     $group->get('/', IndexAction::class);
 
     $group->post('/oauth/password', PasswordGrantAction::class);
