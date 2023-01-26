@@ -1,3 +1,3 @@
 <?php
 
-require __DIR__ . '/../bootstrap-web.php';
+require __DIR__ . '/../src/bootstrap-web.php';
