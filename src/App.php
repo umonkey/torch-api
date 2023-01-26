@@ -19,7 +19,6 @@ class App
     public static function getApp(): SlimApp
     {
         $cb = new ContainerBuilder();
-        $cb->useAnnotations(false);
         $cb->addDefinitions(include __DIR__ . '/../config/dependencies.php');
         $container = $cb->build();
 
