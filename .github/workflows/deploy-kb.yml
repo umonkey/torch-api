@@ -37,6 +37,9 @@ jobs:
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
 
+      - name: Run tests
+        run: composer run-script test
+
       - name: Build and deploy
         run: make deploy
         env:
