@@ -17,6 +17,8 @@ use App\Exceptions\PageNotFoundException;
 use App\Pages\Markdown;
 use App\Pages\Pages;
 use InvalidArgumentException;
+use League\CommonMark\Exception\AlreadyInitializedException;
+use League\CommonMark\Exception\CommonMarkException;
 use RuntimeException;
 
 class PagesTests extends AbstractTestCase
@@ -26,6 +28,7 @@ class PagesTests extends AbstractTestCase
     private PageRepository $repo;
 
     /**
+     * @throws CommonMarkException
      * @throws DatabaseException
      * @throws InvalidArgumentException
      * @throws PageNotFoundException
@@ -49,6 +52,7 @@ class PagesTests extends AbstractTestCase
     }
 
     /**
+     * @throws AlreadyInitializedException
      * @throws ConfigException
      * @throws DatabaseException
      */

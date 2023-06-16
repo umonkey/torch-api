@@ -13,6 +13,7 @@ use App\Pages\Pages;
 use App\Pages\Responders\PageResponder;
 use InvalidArgumentException;
 use JsonException;
+use League\CommonMark\Exception\CommonMarkException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;
@@ -28,6 +29,7 @@ class GetPageAction extends AbstractAction
 
     /**
      * @throws BadRequestException
+     * @throws CommonMarkException
      * @throws DatabaseException
      * @throws InvalidArgumentException
      * @throws JsonException

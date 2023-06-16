@@ -19,7 +19,8 @@
         "slam/phpstan-extensions": "^6.0",
         "spaze/phpstan-disallowed-calls": "^2.2",
         "slevomat/coding-standard": "^7.0",
-        "phpstan/phpstan-phpunit": "^1.1"
+        "phpstan/phpstan-phpunit": "^1.1",
+        "rregeer/phpunit-coverage-check": "^0.3.1"
     },
     "license": "BSD-2-Clause",
     "autoload": {
@@ -40,5 +41,23 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
+    },
+    "scripts": {
+        "autofix": [
+            "composer exec phpcbf -- --standard=dev/phpcs.xml --basepath=. src config tests"
+        ],
+        "lint": [
+            "composer validate --strict",
+            "composer exec phpstan -- --configuration=dev/phpstan.neon analyze --no-progress --no-ansi src config",
+            "composer exec phpcs -- -s -q --standard=dev/phpcs.xml --basepath=. src config"
+        ],
+        "phpunit": [
+            "composer exec phpunit",
+            "composer exec coverage-check var/clover.xml 1"
+        ],
+        "test": [
+            "@lint",
+            "@phpunit"
+        ]
     }
 }

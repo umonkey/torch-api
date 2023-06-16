@@ -15,8 +15,20 @@
         <testsuite name="unit">
             <directory suffix="Tests.php">src</directory>
         </testsuite>
-        <testsuite name="integration">
-            <directory suffix="Tests.php">tests/integration</directory>
-        </testsuite>
     </testsuites>
+
+    <coverage cacheDirectory="var/code-coverage" processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+        <exclude>
+            <directory suffix="Tests.php">src</directory>
+            <directory prefix="bootstrap-" suffix=".php">src</directory>
+        </exclude>
+        <report>
+            <html outputDirectory="./var/coverage/"></html>
+            <clover outputFile="var/clover.xml"></clover>
+            <text outputFile="php://stdout" showOnlySummary="true"></text>
+        </report>
+    </coverage>
 </phpunit>

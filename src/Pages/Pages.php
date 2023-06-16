@@ -11,6 +11,7 @@ use App\Database\Exceptions\RecordNotFoundException;
 use App\Database\Repositories\PageRepository;
 use App\Exceptions\PageNotFoundException;
 use App\Pages\Objects\PageObject;
+use League\CommonMark\Exception\CommonMarkException;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 
@@ -24,6 +25,7 @@ class Pages
     }
 
     /**
+     * @throws CommonMarkException
      * @throws DatabaseException
      * @throws PageNotFoundException
      * @throws RuntimeException

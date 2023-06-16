@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Pages;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Exception\AlreadyInitializedException;
+use League\CommonMark\Exception\CommonMarkException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
@@ -17,6 +19,9 @@ class Markdown
 {
     private readonly MarkdownConverter $md;
 
+    /**
+     * @throws AlreadyInitializedException
+     */
     public function __construct()
     {
         $env = new Environment([
@@ -42,6 +47,7 @@ class Markdown
     }
 
     /**
+     * @throws CommonMarkException
      * @throws RuntimeException
      */
     public function convert(string $source): string
