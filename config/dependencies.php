@@ -6,6 +6,7 @@ use App\Auth\AuthInterface;
 use App\Auth\DefaultAuthClient;
 use App\Core\Config\Environment;
 use App\Core\Logging\ConsoleLogger;
+use App\Core\Logging\FileLogger;
 use App\Database\DatabaseInterface;
 use App\Database\Drivers\MemoryDriver;
 use App\Database\Drivers\SqliteDriver;
@@ -29,6 +30,11 @@ return [
     },
 
     LoggerInterface::class => function (ContainerInterface $container) {
-        return $container->get(ConsoleLogger::class);
+        $env = $container->get(Environment::class);
+
+        return match ($env->get('APP_ENV')) {
+            'unit_tests' => $container->get(FileLogger::class),
+            default => $container->get(ConsoleLogger::class),
+        };
     },
 ];

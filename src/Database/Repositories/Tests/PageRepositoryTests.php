@@ -5,20 +5,16 @@ declare(strict_types=1);
 namespace App\Database\Repositories\Tests;
 
 use App\Core\AbstractTestCase;
-use App\Core\Config;
-use App\Database\DatabaseInterface;
-use App\Database\Drivers\MemoryDriver;
 use App\Database\Entities\PageEntity;
 use App\Database\Exceptions\DatabaseException;
 use App\Database\Exceptions\DuplicateRecordException;
 use App\Database\Exceptions\RecordNotFoundException;
 use App\Database\Repositories\PageRepository;
 use App\Exceptions\ConfigException;
+use Psr\Container\ContainerExceptionInterface;
 
 class PageRepositoryTests extends AbstractTestCase
 {
-    private DatabaseInterface $db;
-
     private PageRepository $repo;
 
     /**
@@ -64,14 +60,13 @@ class PageRepositoryTests extends AbstractTestCase
 
     /**
      * @throws ConfigException
+     * @throws ContainerExceptionInterface
      * @throws DatabaseException
      */
     protected function setUp(): void
     {
         parent::setUp();
 
-        $config = new Config();
-        $this->db = new MemoryDriver($config);
-        $this->repo = new PageRepository($this->db);
+        $this->repo = $this->container->get(PageRepository::class);
     }
 }

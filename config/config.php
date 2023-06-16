@@ -13,4 +13,6 @@ return [
     'log.group' => 'api',
 
     'sqlite.path' => $env->req('SQLITE_PATH'),
+
+    'log.filename' => 'var/errors.log',
 ];

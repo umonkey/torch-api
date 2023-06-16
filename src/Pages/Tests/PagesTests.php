@@ -5,20 +5,17 @@ declare(strict_types=1);
 namespace App\Pages\Tests;
 
 use App\Core\AbstractTestCase;
-use App\Core\Config;
-use App\Core\Logging\ConsoleLogger;
-use App\Database\Drivers\MemoryDriver;
 use App\Database\Entities\PageEntity;
 use App\Database\Entities\UserEntity;
 use App\Database\Exceptions\DatabaseException;
 use App\Database\Repositories\PageRepository;
 use App\Exceptions\ConfigException;
 use App\Exceptions\PageNotFoundException;
-use App\Pages\Markdown;
 use App\Pages\Pages;
 use InvalidArgumentException;
 use League\CommonMark\Exception\AlreadyInitializedException;
 use League\CommonMark\Exception\CommonMarkException;
+use Psr\Container\ContainerExceptionInterface;
 use RuntimeException;
 
 class PagesTests extends AbstractTestCase
@@ -54,23 +51,14 @@ class PagesTests extends AbstractTestCase
     /**
      * @throws AlreadyInitializedException
      * @throws ConfigException
+     * @throws ContainerExceptionInterface
      * @throws DatabaseException
      */
     protected function setUp(): void
     {
         parent::setUp();
 
-        $config = new Config();
-        $db = new MemoryDriver($config);
-        $md = new Markdown();
-        $logger = new ConsoleLogger($config);
-
-        $this->repo = new PageRepository($db);
-
-        $this->pages = new Pages(
-            md: $md,
-            logger: $logger,
-            pages: $this->repo,
-        );
+        $this->pages = $this->container->get(Pages::class);
+        $this->repo = $this->container->get(PageRepository::class);
     }
 }
