@@ -7,11 +7,10 @@ namespace App\Database\Repositories;
 use App\Database\DatabaseInterface;
 use App\Database\Entities\PageEntity;
 use App\Database\Exceptions\DatabaseException;
+use Generator;
 
 class PageRepository
 {
-    private const TABLE_NAME = 'pages';
-
     public function __construct(private readonly DatabaseInterface $db)
     {
     }
@@ -22,7 +21,7 @@ class PageRepository
     public function add(PageEntity $page): void
     {
         $row = $page->serialize();
-        $this->db->add(self::TABLE_NAME, $row);
+        $this->db->addPage($row);
     }
 
     /**
@@ -30,12 +29,7 @@ class PageRepository
      */
     public function get(string $id): PageEntity
     {
-        $row = $this->db->get(self::TABLE_NAME, [
-            'id = :id' => [
-                ':id' => $id,
-            ],
-        ]);
-
+        $row = $this->db->getPage($id);
         return new PageEntity($row);
     }
 
@@ -44,13 +38,17 @@ class PageRepository
      */
     public function update(PageEntity $page): void
     {
-        $this->db->update(self::TABLE_NAME, [
-            'id = :id' => [
-                ':id' => $page->getId(),
-            ],
-        ], [
-            'updated' => $page->getUpdated(),
-            'text' => $page->getText(),
-        ]);
+        $this->db->updatePage($page->toArray());
+    }
+
+    /**
+     * @return PageEntity[]|Generator
+     * @throws DatabaseException
+     */
+    public function iter(): Generator
+    {
+        foreach ($this->db->findPages() as $row) {
+            yield new PageEntity($row);
+        }
     }
 }

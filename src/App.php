@@ -9,6 +9,9 @@ use DI\ContainerBuilder;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\App as SlimApp;
 
+/**
+ * @codeCoverageIgnore
+ */
 class App
 {
     public static function run(): void

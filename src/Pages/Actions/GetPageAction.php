@@ -8,6 +8,7 @@ use App\Auth\AuthInterface;
 use App\Core\AbstractAction;
 use App\Database\Exceptions\DatabaseException;
 use App\Exceptions\BadRequestException;
+use App\Exceptions\BadResponseException;
 use App\Exceptions\PageNotFoundException;
 use App\Pages\Pages;
 use App\Pages\Responders\PageResponder;
@@ -29,6 +30,7 @@ class GetPageAction extends AbstractAction
 
     /**
      * @throws BadRequestException
+     * @throws BadResponseException
      * @throws CommonMarkException
      * @throws DatabaseException
      * @throws InvalidArgumentException
@@ -44,6 +46,6 @@ class GetPageAction extends AbstractAction
 
         $page = $this->pages->get($id, $user);
 
-        return $this->responder->respond($response, $page);
+        return $this->responder->respond($page);
     }
 }

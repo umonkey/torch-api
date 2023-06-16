@@ -18,6 +18,9 @@ use PDOStatement;
 
 class SqliteDriver implements DatabaseInterface
 {
+    private const PAGES_TABLE = 'pages';
+    private const USERS_TABLE = 'users';
+
     protected PDO $conn;
 
     /**
@@ -37,10 +40,86 @@ class SqliteDriver implements DatabaseInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function addPage(array $props): void
+    {
+        $this->add(self::PAGES_TABLE, $props);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPage(string $id): array
+    {
+        return $this->get(self::PAGES_TABLE, [
+            'id = :id' => [
+                ':id' => $id,
+            ],
+        ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function updatePage(array $props): void
+    {
+        $this->update(self::PAGES_TABLE, [
+            'id = :id' => [
+                ':id' => $props['id'] ?? throw new DatabaseException('page id not set'),
+            ],
+        ], $props);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findPages(): Generator
+    {
+        [$query, $params] = SqlUtils::buildSelect(self::PAGES_TABLE, [], []);
+
+        foreach ($this->fetch($query, $params) as $row) {
+            yield $row;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function addUser(array $props): void
+    {
+        $this->add(self::USERS_TABLE, $props);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUser(string $id): array
+    {
+        return $this->get(self::USERS_TABLE, [
+            'id = :id' => [
+                ':id' => $id,
+            ],
+        ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function updateUser(array $props): void
+    {
+        $this->update(self::USERS_TABLE, [
+            'id = :id' => [
+                ':id' => $props['id'] ?? throw new DatabaseException('user id not set'),
+            ],
+        ], $props);
+    }
+
+    /**
      * @param array<string,mixed> $props
      * @throws DatabaseException
      */
-    public function add(string $tableName, array $props): void
+    private function add(string $tableName, array $props): void
     {
         [$query, $params] = SqlUtils::buildInsert($tableName, $props);
 
@@ -53,24 +132,11 @@ class SqliteDriver implements DatabaseInterface
     }
 
     /**
-     * @param array<mixed> $query
-     * @return array[]|Generator<array<mixed>>
+     * @param mixed[] $keys
+     * @return mixed[]
      * @throws DatabaseException
      */
-    public function find(string $tableName, array $query): Generator
-    {
-        [$query, $params] = SqlUtils::buildSelect($tableName, [], $query);
-
-        foreach ($this->fetch($query, $params) as $row) {
-            yield $row;
-        }
-    }
-
-    /**
-     * @param array<mixed> $keys
-     * @throws DatabaseException
-     */
-    public function get(string $tableName, array $keys): array
+    private function get(string $tableName, array $keys): array
     {
         [$query, $params] = SqlUtils::buildSelect($tableName, [], $keys);
 
@@ -81,7 +147,12 @@ class SqliteDriver implements DatabaseInterface
         throw new RecordNotFoundException();
     }
 
-    public function update(string $tableName, array $keys, array $props): void
+    /**
+     * @param mixed[] $keys
+     * @param mixed[] $props
+     * @throws DatabaseException
+     */
+    private function update(string $tableName, array $keys, array $props): void
     {
         [$query, $params] = SqlUtils::buildUpdate($tableName, $keys, $props);
 

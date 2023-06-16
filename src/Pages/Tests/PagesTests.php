@@ -49,6 +49,63 @@ class PagesTests extends AbstractTestCase
     }
 
     /**
+     * @throws CommonMarkException
+     * @throws DatabaseException
+     * @throws PageNotFoundException
+     * @throws RuntimeException
+     */
+    public function testNotFound(): void
+    {
+        $this->expectException(PageNotFoundException::class);
+
+        $user = new UserEntity();
+        $user->setId('phpunit');
+
+        $this->pages->get('foobar', $user);
+    }
+
+    /**
+     * @throws CommonMarkException
+     * @throws DatabaseException
+     * @throws InvalidArgumentException
+     * @throws PageNotFoundException
+     * @throws RuntimeException
+     */
+    public function testUpdateNotFound(): void
+    {
+        $user = new UserEntity();
+        $user->setId('phpunit');
+
+        $this->pages->put('foobar', 'some text', $user);
+
+        $page = $this->pages->get('foobar', $user)->serialize();
+
+        self::assertEquals('foobar', $page['id']);
+        self::assertEquals('some text', $page['source']);
+    }
+
+    /**
+     * @throws CommonMarkException
+     * @throws DatabaseException
+     * @throws InvalidArgumentException
+     * @throws PageNotFoundException
+     * @throws RuntimeException
+     */
+    public function testUpdate(): void
+    {
+        $user = new UserEntity();
+        $user->setId('phpunit');
+
+        $this->pages->put('foobar', 'some text', $user);
+        $this->pages->put('foobar', 'more text', $user);
+
+        $page = $this->pages->get('foobar', $user)->serialize();
+
+        self::assertEquals('foobar', $page['id']);
+        self::assertEquals('more text', $page['source']);
+    }
+
+    /**
      * @throws AlreadyInitializedException
      * @throws ConfigException
      * @throws ContainerExceptionInterface

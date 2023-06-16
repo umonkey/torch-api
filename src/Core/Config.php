@@ -23,6 +23,21 @@ class Config
     }
 
     /**
+     * @return mixed[]
+     * @throws ConfigException
+     */
+    public function getArray(string $key): ?array
+    {
+        $value = $this->props[$key] ?? null;
+
+        if ($value !== null && !is_array($value)) {
+            throw new ConfigException('config value for "%s" must be an array');
+        }
+
+        return $value;
+    }
+
+    /**
      * @throws ConfigException
      */
     public function getInt(string $key, ?int $default = null): ?int
@@ -57,6 +72,17 @@ class Config
     {
         return $this->getString($key)
             ?? throw new ConfigException(sprintf('config value "%s" not set', $key));
+    }
+
+    /**
+     * @param mixed[] $props
+     * @throws ConfigException
+     */
+    public static function fromArray(array $props): self
+    {
+        $instance = new self();
+        $instance->props = $props;
+        return $instance;
     }
 
     /**

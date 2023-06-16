@@ -59,6 +59,40 @@ class PageRepositoryTests extends AbstractTestCase
     }
 
     /**
+     * @throws DatabaseException
+     */
+    public function testUpdatePage(): void
+    {
+        $page = new PageEntity();
+        $page->setId('foobar');
+        $page->setText('hello');
+
+        $this->repo->add($page);
+
+        $page->setText('bye');
+
+        $this->repo->update($page);
+
+        $updated = $this->repo->get($page->getId());
+        self::assertEquals('bye', $updated->getText());
+    }
+
+    /**
+     * @throws DatabaseException
+     */
+    public function testFindPages(): void
+    {
+        $page = new PageEntity();
+        $page->setId('foobar');
+        $page->setText('hello');
+
+        $this->repo->add($page);
+
+        $items = iterator_to_array($this->repo->iter());
+        self::assertEquals(1, count($items));
+    }
+
+    /**
      * @throws ConfigException
      * @throws ContainerExceptionInterface
      * @throws DatabaseException

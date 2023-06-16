@@ -10,8 +10,6 @@ use App\Database\Exceptions\DatabaseException;
 
 class UserRepository
 {
-    private const TABLE_NAME = 'users';
-
     public function __construct(private readonly DatabaseInterface $db)
     {
     }
@@ -22,7 +20,7 @@ class UserRepository
     public function add(UserEntity $user): void
     {
         $row = $user->serialize();
-        $this->db->add(self::TABLE_NAME, $row);
+        $this->db->addUser($row);
     }
 
     /**
@@ -30,12 +28,7 @@ class UserRepository
      */
     public function get(string $id): UserEntity
     {
-        $row = $this->db->get(self::TABLE_NAME, [
-            'id = :id' => [
-                ':id' => $id,
-            ],
-        ]);
-
+        $row = $this->db->getUser($id);
         return new UserEntity($row);
     }
 
@@ -44,15 +37,6 @@ class UserRepository
      */
     public function update(UserEntity $user): void
     {
-        $this->db->update(self::TABLE_NAME, [
-            'id = :id' => [
-                ':id' => $user->getId(),
-            ],
-        ], [
-            'created_at' => $user->getCreatedAt(),
-            'email' => $user->getEmail(),
-            'login_at' => $user->getLoginAt(),
-            'password' => $user->getPassword(),
-        ]);
+        $this->db->updateUser($user->toArray());
     }
 }

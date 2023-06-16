@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
 CREATE TABLE IF NOT EXISTS `users` (
     `id` TEXT NOT NULL,
     `created_at` INT NOT NULL,
-    `login_at` INT NOT NULL,
+    `login_at` INT NULL,
     `email` TEXT NOT NULL,
     `password` TEXT NOT NULL,
     PRIMARY KEY(`id`)

@@ -24,6 +24,14 @@ abstract class AbstractEntity
     }
 
     /**
+     * @return mixed[]
+     */
+    public function toArray(): array
+    {
+        return $this->props;
+    }
+
+    /**
      * @return array<mixed>
      */
     public function serialize(): array
@@ -57,7 +65,7 @@ abstract class AbstractEntity
         $value = $this->props[$key] ?? null;
 
         if ($value !== null && !is_string($value)) {
-            throw new DatabaseException('property value is not a string');
+            throw new DatabaseException(sprintf('property "%s" value not set', $key));
         }
 
         return $value;
@@ -69,7 +77,7 @@ abstract class AbstractEntity
     protected function requireInt(string $key): int
     {
         return $this->getInt($key)
-            ?? throw new DatabaseException('property value not set');
+            ?? throw new DatabaseException(sprintf('property "%s" value not set', $key));
     }
 
     /**
@@ -78,7 +86,7 @@ abstract class AbstractEntity
     protected function requireString(string $key): string
     {
         return $this->getString($key)
-            ?? throw new DatabaseException('property value not set');
+            ?? throw new DatabaseException(sprintf('property "%s" value not set', $key));
     }
 
     protected function setInt(string $key, int $value): void
