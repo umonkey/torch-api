@@ -8,11 +8,11 @@ declare(strict_types=1);
 
 return [
     'jwt.algo' => 'HS256',
-    'jwt.secret' => $env->req('JWT_SECRET'),
+    'jwt.secret' => $env->get('JWT_SECRET'),
 
     'log.group' => 'api',
 
-    'sqlite.path' => $env->req('SQLITE_PATH'),
+    'sqlite.path' => $env->get('SQLITE_PATH'),
 
     'log.filename' => 'var/errors.log',
 ];
