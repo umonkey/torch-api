@@ -6,6 +6,7 @@ namespace App\Database\Drivers\Tests;
 
 use App\Core\AbstractTestCase;
 use App\Core\Config;
+use App\Database\Drivers\MemoryDriver;
 use App\Database\Drivers\SqliteDriver;
 use App\Database\Exceptions\DatabaseException;
 use App\Exceptions\ConfigException;
@@ -57,6 +58,6 @@ class SqliteDriverTests extends AbstractTestCase
     {
         parent::setUp();
 
-        $this->driver = $this->container->get(SqliteDriver::class);
+        $this->driver = $this->container->get(MemoryDriver::class);
     }
 }
