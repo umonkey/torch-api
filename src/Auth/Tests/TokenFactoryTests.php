@@ -11,6 +11,7 @@ use App\Auth\TokenFactory;
 use App\Core\AbstractTestCase;
 use App\Core\Config;
 use App\Exceptions\UnauthorizedException;
+use Psr\Container\ContainerExceptionInterface;
 
 class TokenFactoryTests extends AbstractTestCase
 {
@@ -18,6 +19,8 @@ class TokenFactoryTests extends AbstractTestCase
 
     /**
      * Make sure we get the right config to get predictable results.
+     *
+     * @throws ContainerExceptionInterface
      */
     public function testConfig(): void
     {
@@ -36,6 +39,9 @@ class TokenFactoryTests extends AbstractTestCase
         self::assertEquals('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaHB1bml0In0.g_fV5UD_RfpTHdV5VgUB1sjxZlerRe-j923uzbgdbd0', $token);
     }
 
+    /**
+     * @throws UnauthorizedException
+     */
     public function testDecode(): void
     {
         $token = $this->factory->encode([
@@ -49,12 +55,18 @@ class TokenFactoryTests extends AbstractTestCase
         ], $payload);
     }
 
+    /**
+     * @throws UnauthorizedException
+     */
     public function testDecodeBroken(): void
     {
         $this->expectException(BadTokenFormatException::class);
-        $res = $this->factory->decode('foobar');
+        $this->factory->decode('foobar');
     }
 
+    /**
+     * @throws UnauthorizedException
+     */
     public function testExpiredTokenDecode(): void
     {
         $this->expectException(TokenExpiredException::class);
@@ -67,6 +79,9 @@ class TokenFactoryTests extends AbstractTestCase
         $this->factory->decode($token);
     }
 
+    /**
+     * @throws UnauthorizedException
+     */
     public function testCorruptTokenDecode(): void
     {
         $this->expectException(BadTokenSignatureException::class);
@@ -78,6 +93,9 @@ class TokenFactoryTests extends AbstractTestCase
         $this->factory->decode($token);
     }
 
+    /**
+     * @throws UnauthorizedException
+     */
     public function testOtherException(): void
     {
         $this->expectException(UnauthorizedException::class);

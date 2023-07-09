@@ -15,7 +15,6 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Firebase\JWT\SignatureInvalidException;
 use Throwable;
-use UnexpectedValueException;
 
 class TokenFactory
 {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Auth\Exceptions;
 
-use App\Exceptions\AbstractException;
+use App\Exceptions\UnauthorizedException;
 
-class BadTokenFormatException extends AbstractException
+class BadTokenFormatException extends UnauthorizedException
 {
     public function __construct()
     {

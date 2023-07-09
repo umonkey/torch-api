@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-class UserNotFoundException extends AbstractException
+class UserNotFoundException extends UnauthorizedException
 {
     public function __construct()
     {

@@ -1,0 +1,5 @@
+tables:
+  users:
+    - id: phpunit
+      email: test@example.com
+      password: secret

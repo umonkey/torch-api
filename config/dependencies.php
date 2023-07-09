@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Auth\AuthInterface;
-use App\Auth\DefaultAuthClient;
+use App\Auth\TokenAuthClient;
 use App\Core\Config\Environment;
 use App\Core\Logging\ConsoleLogger;
 use App\Core\Logging\FileLogger;
@@ -15,7 +15,7 @@ use Psr\Log\LoggerInterface;
 
 return [
     AuthInterface::class => function (ContainerInterface $container) {
-        return $container->get(DefaultAuthClient::class);
+        return $container->get(TokenAuthClient::class);
     },
 
     DatabaseInterface::class => function (ContainerInterface $container) {

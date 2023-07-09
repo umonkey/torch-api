@@ -8,6 +8,8 @@ declare(strict_types=1);
 
 namespace App\Auth;
 
+use App\Auth\Exceptions\AuthorizationMissingException;
+use App\Auth\Exceptions\BadTokenFormatException;
 use App\Database\Entities\UserEntity;
 use App\Database\Exceptions\DatabaseException;
 use App\Database\Exceptions\RecordNotFoundException;
@@ -34,7 +36,6 @@ class TokenAuthClient implements AuthInterface
      *
      * @throws DatabaseException
      * @throws UnauthorizedException
-     * @throws UserNotFoundException
      */
     public function authenticate(ServerRequestInterface $request): UserEntity
     {
@@ -43,10 +44,7 @@ class TokenAuthClient implements AuthInterface
         try {
             return $this->users->get($userId);
         } catch (RecordNotFoundException) {
-            $this->logger->debug('User not found, cannot authenticate.', [
-                'id' => $userId,
-            ]);
-
+            $this->logger->warning(sprintf('User %s not found, cannot authenticate.', $userId));
             throw new UserNotFoundException();
         }
     }
@@ -71,17 +69,17 @@ class TokenAuthClient implements AuthInterface
         $value = $request->getHeaderLine('authorization');
 
         if ($value === '') {
-            throw new UnauthorizedException('authorization header missing');
+            throw new AuthorizationMissingException();
         }
 
         $parts = explode(' ', $value, 2);
 
         if (count($parts) !== 2) {
-            throw new UnauthorizedException('bad token format');
+            throw new BadTokenFormatException();
         }
 
         if (mb_strtolower($parts[0]) !== 'bearer') {
-            throw new UnauthorizedException('bad token type');
+            throw new BadTokenFormatException();
         }
 
         return $parts[1];

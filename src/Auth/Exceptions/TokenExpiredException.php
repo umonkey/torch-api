@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Auth\Exceptions;
 
-use App\Exceptions\AbstractException;
+use App\Exceptions\UnauthorizedException;
 
-class TokenExpiredException extends AbstractException
+class TokenExpiredException extends UnauthorizedException
 {
     public function __construct()
     {

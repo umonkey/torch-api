@@ -6,11 +6,11 @@ namespace App\Auth\Exceptions;
 
 use App\Exceptions\UnauthorizedException;
 
-class BadTokenSignatureException extends UnauthorizedException
+class AuthorizationMissingException extends UnauthorizedException
 {
     public function __construct()
     {
-        parent::__construct('Bad JWT token signature, a corrupt token.');
+        parent::__construct('No authorization header in the request.');
     }
 
     public function getStatusCode(): int
