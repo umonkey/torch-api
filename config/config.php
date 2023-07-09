@@ -11,6 +11,9 @@ return [
     'aws.key' => $env->get('AWS_ACCESS_KEY_ID'),
     'aws.secret' => $env->get('AWS_SECRET_ACCESS_KEY'),
 
+    'db.driver' => $env->get('DATABASE_DRIVER'),
+    'dynamodb.table-prefix' => $env->get('DATABASE_PREFIX'),
+
     'jwt.algo' => 'HS256',
 
     'jwt.secret' => match (APP_ENV) {
