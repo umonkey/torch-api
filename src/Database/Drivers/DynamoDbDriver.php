@@ -6,6 +6,7 @@ namespace App\Database\Drivers;
 
 use App\Core\Config;
 use App\Database\DatabaseInterface;
+use App\Database\Exceptions\DatabaseAccessDeniedException;
 use App\Database\Exceptions\DatabaseException;
 use App\Database\Exceptions\DuplicateRecordException;
 use App\Database\Exceptions\RecordNotFoundException;
@@ -13,8 +14,10 @@ use App\Database\Helpers\DynamoDbUtils;
 use App\Exceptions\ConfigException;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\DynamoDb\Exception\DynamoDbException;
+use Aws\Exception\AwsException;
 use Generator;
 use InvalidArgumentException;
+use Psr\Log\LoggerInterface;
 use Throwable;
 
 /**
@@ -37,7 +40,7 @@ class DynamoDbDriver implements DatabaseInterface
     /**
      * @throws ConfigException
      */
-    public function __construct(Config $config)
+    public function __construct(Config $config, private readonly LoggerInterface $logger)
     {
         $this->config = $config->getArray('dynamodb.config') ?? [
             'region' => $config->getString('aws.region'),
@@ -69,12 +72,12 @@ class DynamoDbDriver implements DatabaseInterface
         } catch (DynamoDbException $e) {
             throw match ($e->getAwsErrorCode()) {
                 'ConditionalCheckFailedException' => new DuplicateRecordException(),
-                default => self::wrapException($e),
+                default => $this->wrapException($e),
             };
         } catch (DatabaseException $e) {
             throw $e;
         } catch (Throwable $e) {
-            self::wrapException($e);
+            $this->wrapException($e);
         }
     }
 
@@ -99,12 +102,12 @@ class DynamoDbDriver implements DatabaseInterface
         } catch (DynamoDbException $e) {
             match ($e->getAwsErrorCode()) {
                 'ConditionalCheckFailedException' => throw new RecordNotFoundException(),
-                default => self::wrapException($e),
+                default => $this->wrapException($e),
             };
         } catch (DatabaseException $e) {
             throw $e;
         } catch (Throwable $e) {
-            self::wrapException($e);
+            $this->wrapException($e);
         }
     }
 
@@ -123,12 +126,35 @@ class DynamoDbDriver implements DatabaseInterface
         } catch (DynamoDbException $e) {
             throw match ($e->getAwsErrorCode()) {
                 'ConditionalCheckFailedException' => new RecordNotFoundException(),
-                default => self::wrapException($e),
+                default => $this->wrapException($e),
             };
         } catch (DatabaseException $e) {
             throw $e;
         } catch (Throwable $e) {
-            self::wrapException($e);
+            $this->wrapException($e);
+        }
+    }
+
+    /**
+     * @throws DatabaseException
+     */
+    public function deletePage(string $id): void
+    {
+        try {
+            $query = DynamoDbUtils::buildDeleteQuery($this->wrapTableName(self::PAGES_TABLE), [
+                'id' => $id,
+            ]);
+
+            $this->getClient()->deleteItem($query);
+        } catch (DynamoDbException $e) {
+            throw match ($e->getAwsErrorCode()) {
+                'ConditionalCheckFailedException' => new RecordNotFoundException(),
+                default => $this->wrapException($e),
+            };
+        } catch (DatabaseException $e) {
+            throw $e;
+        } catch (Throwable $e) {
+            $this->wrapException($e);
         }
     }
 
@@ -156,7 +182,7 @@ class DynamoDbDriver implements DatabaseInterface
         } catch (DatabaseException $e) {
             throw $e;
         } catch (Throwable $e) {
-            self::wrapException($e);
+            $this->wrapException($e);
         }
     }
 
@@ -174,12 +200,12 @@ class DynamoDbDriver implements DatabaseInterface
         } catch (DynamoDbException $e) {
             throw match ($e->getAwsErrorCode()) {
                 'ConditionalCheckFailedException' => new DuplicateRecordException(),
-                default => self::wrapException($e),
+                default => $this->wrapException($e),
             };
         } catch (DatabaseException $e) {
             throw $e;
         } catch (Throwable $e) {
-            self::wrapException($e);
+            $this->wrapException($e);
         }
     }
 
@@ -204,7 +230,7 @@ class DynamoDbDriver implements DatabaseInterface
         } catch (DatabaseException $e) {
             throw $e;
         } catch (Throwable $e) {
-            self::wrapException($e);
+            $this->wrapException($e);
         }
     }
 
@@ -215,20 +241,27 @@ class DynamoDbDriver implements DatabaseInterface
     public function updateUser(array $props): void
     {
         try {
+            $id = $props['id']
+                ?? throw new DatabaseException('user id not set');
+
+            unset($props['id']);
+
             $query = DynamoDbUtils::buildUpdateQuery($this->wrapTableName(self::USERS_TABLE), [
-                'id' => $props['id'] ?? throw new DatabaseException('user id not set'),
+                'id' => $id,
             ], $props);
+
+            $this->logger->debug('updateUser', $query);
 
             $this->getClient()->updateItem($query);
         } catch (DynamoDbException $e) {
             throw match ($e->getAwsErrorCode()) {
                 'ConditionalCheckFailedException' => new RecordNotFoundException(),
-                default => self::wrapException($e),
+                default => $this->wrapException($e),
             };
         } catch (DatabaseException $e) {
             throw $e;
         } catch (Throwable $e) {
-            self::wrapException($e);
+            $this->wrapException($e);
         }
     }
 
@@ -258,8 +291,19 @@ class DynamoDbDriver implements DatabaseInterface
      * @return never
      * @throws DatabaseException
      */
-    private static function wrapException(Throwable $e): DatabaseException
+    private function wrapException(Throwable $e): DatabaseException
     {
+        if ($e instanceof AwsException) {
+            $this->logger->error(sprintf('%s: %s', $e->getAwsErrorCode(), $e->getAwsErrorMessage()));
+
+            match ($e->getAwsErrorCode()) {
+                'AccessDeniedException' => throw new DatabaseAccessDeniedException('Could not access the database, details logged.'),
+                default => throw new DatabaseException(sprintf('%s: %s', $e->getAwsErrorCode(), $e->getAwsErrorMessage())),
+            };
+        }
+
+        $this->logger->error(sprintf('%s: DynamoDB command failed: %s', get_class($e), $e->getMessage()));
+
         throw new DatabaseException('command failed');
     }
 }

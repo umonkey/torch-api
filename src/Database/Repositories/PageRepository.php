@@ -42,6 +42,15 @@ class PageRepository
     }
 
     /**
+     * @inheritDoc
+     * @throws DatabaseException
+     */
+    public function delete(string $id): void
+    {
+        $this->db->deletePage($id);
+    }
+
+    /**
      * @return PageEntity[]|Generator
      * @throws DatabaseException
      */

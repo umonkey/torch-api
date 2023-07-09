@@ -30,6 +30,11 @@ interface DatabaseInterface
     public function updatePage(array $props): void;
 
     /**
+     * @throws DatabaseException
+     */
+    public function deletePage(string $id): void;
+
+    /**
      * @return mixed[]|Generator
      * @throws DatabaseException
      */

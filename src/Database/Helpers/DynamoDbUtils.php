@@ -23,6 +23,19 @@ class DynamoDbUtils
 
     /**
      * @param array<string,string|int> $keys
+     * @return mixed[]
+     * @throws DatabaseException
+     */
+    public static function buildDeleteQuery(string $tableName, array $keys): array
+    {
+        return [
+            'TableName' => $tableName,
+            'Key' => self::wrap($keys),
+        ];
+    }
+
+    /**
+     * @param array<string,string|int> $keys
      * @param array<string,mixed> $props
      * @return mixed[]
      * @throws DatabaseException

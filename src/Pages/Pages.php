@@ -79,4 +79,20 @@ class Pages
             ]);
         }
     }
+
+    /**
+     * @throws DatabaseException
+     * @throws PageNotFoundException
+     */
+    public function delete(string $id, UserEntity $user): void
+    {
+        try {
+            $page = $this->pages->get($id);
+            $this->pages->delete($page->getId());
+
+            $this->logger->info(sprintf('Page "%s" deleted by %s', $page->getId(), $user->getId()));
+        } catch (RecordNotFoundException) {
+            throw new PageNotFoundException();
+        }
+    }
 }

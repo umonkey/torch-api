@@ -72,6 +72,18 @@ class SqliteDriver implements DatabaseInterface
     }
 
     /**
+     * @throws DatabaseException
+     */
+    public function deletePage(string $id): void
+    {
+        $this->delete(self::PAGES_TABLE, [
+            'id = :id' => [
+                ':id' => $id,
+            ],
+        ]);
+    }
+
+    /**
      * @inheritDoc
      */
     public function findPages(): Generator
@@ -155,6 +167,22 @@ class SqliteDriver implements DatabaseInterface
     private function update(string $tableName, array $keys, array $props): void
     {
         [$query, $params] = SqlUtils::buildUpdate($tableName, $keys, $props);
+
+        $sth = $this->query($query, $params);
+        $count = $sth->rowCount();
+
+        if ($count === 0) {
+            throw new RecordNotFoundException();
+        }
+    }
+
+    /**
+     * @param mixed[] $keys
+     * @throws DatabaseException
+     */
+    private function delete(string $tableName, array $keys): void
+    {
+        [$query, $params] = SqlUtils::buildDelete($tableName, $keys);
 
         $sth = $this->query($query, $params);
         $count = $sth->rowCount();
