@@ -34,11 +34,12 @@ class PageRepositoryTests extends AbstractTestCase
     {
         $this->expectException(DuplicateRecordException::class);
 
+        $this->fixture('001.yaml');
+
         $page = new PageEntity();
         $page->setId('foobar');
         $page->setText('hello');
 
-        $this->repo->add($page);
         $this->repo->add($page);
     }
 
@@ -80,6 +81,24 @@ class PageRepositoryTests extends AbstractTestCase
     /**
      * @throws DatabaseException
      */
+    public function testDeletePage(): void
+    {
+        $this->fixture('001.yaml');
+
+        $this->repo->get('foobar');
+        $this->repo->delete('foobar');
+
+        try {
+            $this->repo->get('foobar');
+            self::fail('deleted page still accessible');
+        } catch (RecordNotFoundException) {
+            // OK
+        }
+    }
+
+    /**
+     * @throws DatabaseException
+     */
     public function testFindPages(): void
     {
         $page = new PageEntity();
@@ -90,6 +109,29 @@ class PageRepositoryTests extends AbstractTestCase
 
         $items = iterator_to_array($this->repo->iter());
         self::assertEquals(1, count($items));
+    }
+
+    /**
+     * @throws DatabaseException
+     */
+    public function testUpdateNotFound(): void
+    {
+        $this->expectException(RecordNotFoundException::class);
+
+        $page = new PageEntity();
+        $page->setId('foobar');
+
+        $this->repo->update($page);
+    }
+
+    /**
+     * @throws DatabaseException
+     */
+    public function testDeleteNotFound(): void
+    {
+        $this->expectException(RecordNotFoundException::class);
+
+        $this->repo->delete('foobar');
     }
 
     /**

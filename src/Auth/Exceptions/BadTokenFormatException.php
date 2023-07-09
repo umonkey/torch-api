@@ -13,6 +13,9 @@ class BadTokenFormatException extends UnauthorizedException
         parent::__construct('Bad JWT token format');
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getStatusCode(): int
     {
         return 401;

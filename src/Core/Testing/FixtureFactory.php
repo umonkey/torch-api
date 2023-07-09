@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Core\Testing;
 
+use App\Database\Entities\PageEntity;
 use App\Database\Entities\UserEntity;
+use App\Database\Repositories\PageRepository;
 use App\Database\Repositories\UserRepository;
 use RuntimeException;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -13,7 +15,7 @@ use Throwable;
 
 class FixtureFactory
 {
-    public function __construct(private readonly UserRepository $users)
+    public function __construct(private readonly UserRepository $users, private readonly PageRepository $pages)
     {
     }
 
@@ -62,6 +64,10 @@ class FixtureFactory
             foreach ($items as $item) {
                 try {
                     match ($tableName) {
+                        'pages' => $this->pages->add(
+                            new PageEntity($item),
+                        ),
+
                         'users' => $this->users->add(
                             new UserEntity($item),
                         ),

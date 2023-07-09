@@ -1,0 +1,4 @@
+tables:
+  pages:
+    - id: foobar
+      text: hello

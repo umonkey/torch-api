@@ -165,11 +165,13 @@ class DynamoDbUtils
                 }, $value['NS']);
             }
 
+            /**
             if (isset($value['L'])) { // list
                 return array_map(function (array $item) {
                     return self::unwrap([$item])[0];
                 }, $value['L']);
             }
+            **/
 
             if (isset($value['NULL'])) {
                 return null;

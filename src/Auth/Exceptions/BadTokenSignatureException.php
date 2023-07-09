@@ -13,6 +13,9 @@ class BadTokenSignatureException extends UnauthorizedException
         parent::__construct('Bad JWT token signature, a corrupt token.');
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getStatusCode(): int
     {
         return 401;

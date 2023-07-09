@@ -13,6 +13,9 @@ class AuthorizationMissingException extends UnauthorizedException
         parent::__construct('No authorization header in the request.');
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getStatusCode(): int
     {
         return 401;

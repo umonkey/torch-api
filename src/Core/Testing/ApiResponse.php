@@ -8,6 +8,11 @@ use App\Exceptions\BadResponseException;
 use JsonException;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * This is only used in integration tests, so no test coverage.
+ *
+ * @codeCoverageIgnore
+ */
 class ApiResponse
 {
     public function __construct(

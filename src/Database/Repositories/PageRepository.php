@@ -38,6 +38,7 @@ class PageRepository
      */
     public function update(PageEntity $page): void
     {
+        $page->validate();
         $this->db->updatePage($page->toArray());
     }
 

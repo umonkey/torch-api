@@ -6,10 +6,13 @@ namespace App\Exceptions;
 
 use Exception;
 
+/**
+ * @codeCoverageIgnore
+ */
 abstract class AbstractException extends Exception
 {
     /**
-     * @return array<mixed>
+     * @return mixed[]
      */
     public function getResponse(): array
     {

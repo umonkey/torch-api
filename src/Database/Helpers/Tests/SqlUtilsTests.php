@@ -170,4 +170,18 @@ class SqlUtilsTests extends AbstractTestCase
             ':id' => 'foo',
         ], $res[1]);
     }
+
+    /**
+     * @throws DatabaseException
+     */
+    public function testBuildQueryWrongCondition(): void
+    {
+        $this->expectException(DatabaseException::class);
+
+        $params = [];
+
+        SqlUtils::buildAltWhere($params, [
+            'id' => '123',
+        ]);
+    }
 }

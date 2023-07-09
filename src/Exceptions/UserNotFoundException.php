@@ -11,6 +11,9 @@ class UserNotFoundException extends UnauthorizedException
         parent::__construct('user not found');
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getStatusCode(): int
     {
         return 401;

@@ -10,6 +10,7 @@ use App\Index\Actions\IndexAction;
 use App\OAuth\Actions\PasswordGrantAction;
 use App\Pages\Actions\DeletePageAction;
 use App\Pages\Actions\GetPageAction;
+use App\Pages\Actions\ListPagesAction;
 use App\Pages\Actions\PutPageAction;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -18,6 +19,7 @@ $app->group('/v1', function (RouteCollectorProxy $group) {
 
     $group->post('/oauth/password', PasswordGrantAction::class);
 
+    $group->get('/pages', ListPagesAction::class);
     $group->get('/pages/{id}', GetPageAction::class);
     $group->put('/pages/{id}', PutPageAction::class);
     $group->delete('/pages/{id}', DeletePageAction::class);

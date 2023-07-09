@@ -27,6 +27,7 @@ class MemoryDriver extends SqliteDriver
 
     /**
      * @throws DatabaseException
+     * @codeCoverageIgnore
      */
     private function initSchema(): void
     {

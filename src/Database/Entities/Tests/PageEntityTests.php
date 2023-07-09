@@ -7,6 +7,7 @@ namespace App\Database\Entities\Tests;
 use App\Core\AbstractTestCase;
 use App\Database\Entities\PageEntity;
 use App\Database\Exceptions\DatabaseException;
+use App\Database\Exceptions\WrongValueTypeException;
 
 class PageEntityTests extends AbstractTestCase
 {
@@ -56,5 +57,30 @@ class PageEntityTests extends AbstractTestCase
         $page = new PageEntity();
         $page->setUpdated(time());
         $page->getUpdated();
+    }
+
+    /**
+     * @throws DatabaseException
+     */
+    public function testInvalidTimestamp(): void
+    {
+        $this->expectException(WrongValueTypeException::class);
+
+        (new PageEntity([
+            'id' => 'foobar',
+            'created' => 'now',
+        ]))->getCreated();
+    }
+
+    /**
+     * @throws DatabaseException
+     */
+    public function testInvalidStringValue(): void
+    {
+        $this->expectException(WrongValueTypeException::class);
+
+        (new PageEntity([
+            'id' => 123,
+        ]))->getId();
     }
 }

@@ -8,7 +8,9 @@ use App\Core\AbstractTestCase;
 use App\Database\Entities\PageEntity;
 use App\Database\Entities\UserEntity;
 use App\Database\Exceptions\DatabaseException;
+use App\Database\Exceptions\RecordNotFoundException;
 use App\Database\Repositories\PageRepository;
+use App\Database\Repositories\UserRepository;
 use App\Exceptions\ConfigException;
 use App\Exceptions\PageNotFoundException;
 use App\Pages\Pages;
@@ -20,9 +22,11 @@ use RuntimeException;
 
 class PagesTests extends AbstractTestCase
 {
-    private Pages $pages;
+    private readonly Pages $pages;
 
-    private PageRepository $repo;
+    private readonly UserRepository $userRepo;
+
+    private readonly PageRepository $pageRepo;
 
     /**
      * @throws CommonMarkException
@@ -37,7 +41,7 @@ class PagesTests extends AbstractTestCase
         $page->setId('foobar');
         $page->setText('# hello');
 
-        $this->repo->add($page);
+        $this->pageRepo->add($page);
 
         $user = new UserEntity();
         $user->setId('phpunit');
@@ -106,6 +110,41 @@ class PagesTests extends AbstractTestCase
     }
 
     /**
+     * @throws DatabaseException
+     * @throws PageNotFoundException
+     */
+    public function testDelete(): void
+    {
+        $this->fixture('001.yaml');
+
+        $this->pageRepo->get('foobar');
+        $user = $this->userRepo->get('phpunit');
+
+        $this->pages->delete('foobar', $user);
+
+        try {
+            $this->pageRepo->get('foobar');
+            self::fail('deleted page still accessible');
+        } catch (RecordNotFoundException) {
+            // OK
+        }
+    }
+
+    /**
+     * @throws DatabaseException
+     * @throws PageNotFoundException
+     */
+    public function testDeleteNotFound(): void
+    {
+        $this->expectException(PageNotFoundException::class);
+
+        $this->fixture('001.yaml');
+
+        $user = $this->userRepo->get('phpunit');
+        $this->pages->delete('not-found', $user);
+    }
+
+    /**
      * @throws AlreadyInitializedException
      * @throws ConfigException
      * @throws ContainerExceptionInterface
@@ -116,6 +155,7 @@ class PagesTests extends AbstractTestCase
         parent::setUp();
 
         $this->pages = $this->container->get(Pages::class);
-        $this->repo = $this->container->get(PageRepository::class);
+        $this->pageRepo = $this->container->get(PageRepository::class);
+        $this->userRepo = $this->container->get(UserRepository::class);
     }
 }

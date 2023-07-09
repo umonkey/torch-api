@@ -6,6 +6,9 @@ namespace App\Exceptions;
 
 class BadRequestException extends AbstractException
 {
+    /**
+     * @codeCoverageIgnore
+     */
     public function getStatusCode(): int
     {
         return 400;

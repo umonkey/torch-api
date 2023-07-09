@@ -13,6 +13,11 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use Throwable;
 
+/**
+ * This is only used in integration tests, so no test coverage.
+ *
+ * @codeCoverageIgnore
+ */
 class ApiClient
 {
     private readonly Client $http;

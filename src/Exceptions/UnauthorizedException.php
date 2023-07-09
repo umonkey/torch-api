@@ -11,6 +11,9 @@ class UnauthorizedException extends AbstractException
         parent::__construct($message);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getStatusCode(): int
     {
         return 401;

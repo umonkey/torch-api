@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Database\Entities;
 
 use App\Database\Exceptions\DatabaseException;
+use App\Database\Exceptions\PropertyNotSetException;
+use App\Database\Exceptions\WrongValueTypeException;
 
 abstract class AbstractEntity
 {
@@ -51,7 +53,7 @@ abstract class AbstractEntity
         $value = $this->props[$key] ?? null;
 
         if ($value !== null && !is_int($value)) {
-            throw new DatabaseException('property value is not an int');
+            throw new WrongValueTypeException('property value is not an int');
         }
 
         return $value;
@@ -65,7 +67,7 @@ abstract class AbstractEntity
         $value = $this->props[$key] ?? null;
 
         if ($value !== null && !is_string($value)) {
-            throw new DatabaseException(sprintf('property "%s" value not set', $key));
+            throw new WrongValueTypeException(sprintf('property "%s" value not set', $key));
         }
 
         return $value;
@@ -77,7 +79,7 @@ abstract class AbstractEntity
     protected function requireInt(string $key): int
     {
         return $this->getInt($key)
-            ?? throw new DatabaseException(sprintf('property "%s" value not set', $key));
+            ?? throw new PropertyNotSetException(sprintf('property "%s" value not set', $key));
     }
 
     /**
@@ -86,7 +88,7 @@ abstract class AbstractEntity
     protected function requireString(string $key): string
     {
         return $this->getString($key)
-            ?? throw new DatabaseException(sprintf('property "%s" value not set', $key));
+            ?? throw new PropertyNotSetException(sprintf('property "%s" value not set', $key));
     }
 
     protected function setInt(string $key, int $value): void
@@ -100,10 +102,7 @@ abstract class AbstractEntity
     }
 
     /**
-     * @return array<mixed>
+     * @return mixed[]
      **/
-    protected static function getDefaults(): array
-    {
-        return [];
-    }
+    abstract protected static function getDefaults(): array;
 }

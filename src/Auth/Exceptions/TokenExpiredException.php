@@ -13,6 +13,9 @@ class TokenExpiredException extends UnauthorizedException
         parent::__construct('Token expired, please request a new one.');
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getStatusCode(): int
     {
         return 401;

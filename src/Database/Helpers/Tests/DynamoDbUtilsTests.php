@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Database\Helpers\Tests;
 
 use App\Core\AbstractTestCase;
+use App\Database\Entities\PageEntity;
 use App\Database\Exceptions\DatabaseException;
 use App\Database\Helpers\DynamoDbUtils;
 
@@ -130,6 +131,18 @@ class DynamoDbUtilsTests extends AbstractTestCase
             'binary' => '\x00\x01',
             'num-set' => [1, 1.1],
         ], $res);
+    }
+
+    /**
+     * @throws DatabaseException
+     */
+    public function testWrapObject(): void
+    {
+        $this->expectException(DatabaseException::class);
+
+        DynamoDbUtils::wrap([
+            'page' => new PageEntity(),
+        ]);
     }
 
     public function testUnwrapUnknown(): void
@@ -318,6 +331,20 @@ class DynamoDbUtilsTests extends AbstractTestCase
     /**
      * @throws DatabaseException
      */
+    public function testWrongNumberOfKeys(): void
+    {
+        $this->expectException(DatabaseException::class);
+
+        DynamoDbUtils::buildUpdateQuery('someTable', [
+            'id' => 1,
+            'foo' => 2,
+            'bar' => 3,
+        ], []);
+    }
+
+    /**
+     * @throws DatabaseException
+     */
     public function testBuildUpdateQueryRemove(): void
     {
         $query = DynamoDbUtils::buildUpdateQuery('someTable', [
@@ -342,6 +369,25 @@ class DynamoDbUtilsTests extends AbstractTestCase
                 ],
                 'subid' => [
                     'S' => 'snafu',
+                ],
+            ],
+        ], $query);
+    }
+
+    /**
+     * @throws DatabaseException
+     */
+    public function testBuildDeleteQuery(): void
+    {
+        $query = DynamoDbUtils::buildDeleteQuery('someTable', [
+            'id' => 'foobar',
+        ]);
+
+        self::assertEquals([
+            'TableName' => 'someTable',
+            'Key' => [
+                'id' => [
+                    'S' => 'foobar',
                 ],
             ],
         ], $query);

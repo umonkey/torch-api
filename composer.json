@@ -59,7 +59,7 @@
         ],
         "phpunit": [
             "composer exec phpunit",
-            "composer exec coverage-check var/clover.xml 64"
+            "composer exec coverage-check var/clover.xml 77"
         ],
         "test": [
             "@lint",

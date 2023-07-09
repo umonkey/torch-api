@@ -1,0 +1,6 @@
+tables:
+  users:
+    - id: foobar
+      email: test@example.com
+      password: $2y$10$Icuh6vu1cRZ9xjYn0J9a/ewNwITmpUKXA.3rHVfJMnDkNd78OoQYO
+      login_at: 0
