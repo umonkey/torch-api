@@ -19,7 +19,11 @@ lint-composer:
 	composer validate --strict
 
 phpunit:
+ifneq (,$(FILTER))
+	composer run phpunit -- -- --filter "$(FILTER)"
+else
 	composer run phpunit
+endif
 
 schema-sqlite:
 	sqlite3 var/database.sqlite < config/schema-sqlite.sql

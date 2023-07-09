@@ -12,9 +12,9 @@ use Psr\Container\ContainerInterface;
 
 class AbstractTestCase extends TestCase
 {
-    protected ContainerInterface $container;
+    protected readonly ContainerInterface $container;
 
-    protected Environment $env;
+    protected readonly Environment $env;
 
     public function testEnvironment(): void
     {

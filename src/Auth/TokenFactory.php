@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 namespace App\Auth;
 
+use App\Auth\Exceptions\BadTokenFormatException;
+use App\Auth\Exceptions\BadTokenSignatureException;
+use App\Auth\Exceptions\TokenExpiredException;
 use App\Core\Config;
 use App\Exceptions\ConfigException;
 use App\Exceptions\UnauthorizedException;
+use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Firebase\JWT\SignatureInvalidException;
 use Throwable;
+use UnexpectedValueException;
 
 class TokenFactory
 {
@@ -27,7 +33,12 @@ class TokenFactory
     }
 
     /**
-     * @param array<mixed> $data
+     * Low level JWT encoding.
+     *
+     * For a list of possible claims, see RFC 7519 section 4:
+     * https://www.rfc-editor.org/rfc/rfc7519#section-4
+     *
+     * @param mixed[] $data
      */
     public function encode(array $data): string
     {
@@ -45,8 +56,16 @@ class TokenFactory
             $object = JWT::decode($token, $key);
 
             return (array)$object;
+        } catch (ExpiredException) {
+            throw new TokenExpiredException();
+        } catch (SignatureInvalidException) {
+            throw new BadTokenSignatureException();
         } catch (Throwable $e) {
-            throw new UnauthorizedException($e->getMessage());
+            if ($e->getMessage() === 'Wrong number of segments') {
+                throw new BadTokenFormatException();
+            }
         }
+
+        throw new UnauthorizedException($e->getMessage());
     }
 }

@@ -12,7 +12,11 @@ return [
     'aws.secret' => $env->get('AWS_SECRET_ACCESS_KEY'),
 
     'jwt.algo' => 'HS256',
-    'jwt.secret' => $env->get('JWT_SECRET'),
+
+    'jwt.secret' => match (APP_ENV) {
+        'unit_tests' => 'secret',
+        default => $env->get('JWT_SECRET'),
+    },
 
     'log.group' => 'api',
 

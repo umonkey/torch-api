@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * The authentication client that uses JWT tokens.
+ */
+
 declare(strict_types=1);
 
 namespace App\Auth;
@@ -13,7 +17,7 @@ use App\Exceptions\UserNotFoundException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 
-class DefaultAuthClient implements AuthInterface
+class TokenAuthClient implements AuthInterface
 {
     public function __construct(
         private readonly TokenFactory $token,
@@ -23,6 +27,11 @@ class DefaultAuthClient implements AuthInterface
     }
 
     /**
+     * Extract user info from the request.
+     *
+     * Looks for the authorization header, extracts the token, reads the user id
+     * from the `sub' claim, loads the user entity.  On any error, throws an exception.
+     *
      * @throws DatabaseException
      * @throws UnauthorizedException
      * @throws UserNotFoundException
