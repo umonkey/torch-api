@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/functions.php';
 
 define('APP_ENV', match (getenv('APP_ENV')) {
     false => 'production',

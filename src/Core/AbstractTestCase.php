@@ -12,7 +12,7 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Throwable;
 
-class AbstractTestCase extends TestCase
+abstract class AbstractTestCase extends TestCase
 {
     protected readonly ContainerInterface $container;
 
@@ -24,7 +24,7 @@ class AbstractTestCase extends TestCase
     {
         $value = $this->env->get('APP_ENV');
         self::assertNotNull($value, 'APP_ENV not set');
-        self::assertEquals('unit_tests', $this->env->get('APP_ENV'), 'APP_ENM must be set to unit_tests, otherwise real resources could be modified.');
+        self::assertEquals('unit_tests', $value, 'APP_ENV must be set to unit_tests, otherwise real resources could be modified.');
     }
 
     protected function fixture(string $fileName): void

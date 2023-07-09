@@ -27,7 +27,8 @@
     "license": "BSD-2-Clause",
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src/",
+            "Integration\\": "tests/integration/"
         }
     },
     "authors": [
@@ -47,6 +48,9 @@
     "scripts": {
         "autofix": [
             "composer exec phpcbf -- --standard=dev/phpcs.xml --basepath=. src config tests"
+        ],
+        "integration-tests": [
+            "composer exec phpunit -- -c phpunit.integration.xml"
         ],
         "lint": [
             "composer validate --strict",

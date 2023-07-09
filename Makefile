@@ -1,6 +1,9 @@
 autofix:
 	php vendor/bin/phpcbf --standard=dev/phpcs.xml --basepath=$(PWD) src
 
+clean:
+	rm -rf var/*
+
 deploy:
 ifndef WIKI_API_DEPLOY_REMOTE
 	$(error WIKI_API_DEPLOY_REMOTE not defined)
@@ -11,6 +14,9 @@ endif
 
 db:
 	sqlite3 var/database.sqlite
+
+integration-tests:
+	composer run-script integration-tests
 
 lint:
 	composer run-script lint

@@ -9,28 +9,41 @@
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
 !_TAG_PROGRAM_VERSION	5.9.0	//
-APP_ENV	src/bootstrap-phpunit.php	/^define('APP_ENV', 'unit_tests');$/;"	d	language:PHP
+APP_ENV	src/bootstrap-integration_tests.php	/^define('APP_ENV', 'unit_tests');$/;"	d	language:PHP
+APP_ENV	src/bootstrap-unit_tests.php	/^define('APP_ENV', 'unit_tests');$/;"	d	language:PHP
 APP_ENV	src/bootstrap-web.php	/^define('APP_ENV', match (getenv('APP_ENV')) {$/;"	d	language:PHP
 AbstractAction	src/Core/AbstractAction.php	/^abstract class AbstractAction$/;"	c	language:PHP	namespace:App\\Core	implementation:abstract
 AbstractEntity	src/Database/Entities/AbstractEntity.php	/^abstract class AbstractEntity$/;"	c	language:PHP	namespace:App\\Database\\Entities	implementation:abstract
 AbstractException	src/Exceptions/AbstractException.php	/^abstract class AbstractException extends Exception$/;"	c	language:PHP	namespace:App\\Exceptions	inherits:Exception	implementation:abstract
 AbstractResponder	src/Core/AbstractResponder.php	/^abstract class AbstractResponder$/;"	c	language:PHP	namespace:App\\Core	implementation:abstract
-AbstractTestCase	src/Core/AbstractTestCase.php	/^class AbstractTestCase extends TestCase$/;"	c	language:PHP	namespace:App\\Core	inherits:TestCase
+AbstractTestCase	src/Core/AbstractTestCase.php	/^abstract class AbstractTestCase extends TestCase$/;"	c	language:PHP	namespace:App\\Core	inherits:TestCase	implementation:abstract
+ApiClient	src/Core/Testing/ApiClient.php	/^class ApiClient$/;"	c	language:PHP	namespace:App\\Core\\Testing
+ApiException	src/Core/Testing/Exceptions/ApiException.php	/^class ApiException extends AbstractException$/;"	c	language:PHP	namespace:App\\Core\\Testing\\Exceptions	inherits:AbstractException
+ApiResponse	src/Core/Testing/ApiResponse.php	/^class ApiResponse$/;"	c	language:PHP	namespace:App\\Core\\Testing
 App	src/App.php	/^class App$/;"	c	language:PHP	namespace:App
 App	src/App.php	/^namespace App;$/;"	n	language:PHP
 App\\Auth	src/Auth/AuthInterface.php	/^namespace App\\Auth;$/;"	n	language:PHP
-App\\Auth	src/Auth/DefaultAuthClient.php	/^namespace App\\Auth;$/;"	n	language:PHP
+App\\Auth	src/Auth/TokenAuthClient.php	/^namespace App\\Auth;$/;"	n	language:PHP
 App\\Auth	src/Auth/TokenFactory.php	/^namespace App\\Auth;$/;"	n	language:PHP
+App\\Auth\\Exceptions	src/Auth/Exceptions/AuthorizationMissingException.php	/^namespace App\\Auth\\Exceptions;$/;"	n	language:PHP
+App\\Auth\\Exceptions	src/Auth/Exceptions/BadTokenFormatException.php	/^namespace App\\Auth\\Exceptions;$/;"	n	language:PHP
+App\\Auth\\Exceptions	src/Auth/Exceptions/BadTokenSignatureException.php	/^namespace App\\Auth\\Exceptions;$/;"	n	language:PHP
+App\\Auth\\Exceptions	src/Auth/Exceptions/TokenExpiredException.php	/^namespace App\\Auth\\Exceptions;$/;"	n	language:PHP
 App\\Core	src/Core/AbstractAction.php	/^namespace App\\Core;$/;"	n	language:PHP
 App\\Core	src/Core/AbstractResponder.php	/^namespace App\\Core;$/;"	n	language:PHP
 App\\Core	src/Core/AbstractTestCase.php	/^namespace App\\Core;$/;"	n	language:PHP
 App\\Core	src/Core/Config.php	/^namespace App\\Core;$/;"	n	language:PHP
 App\\Core	src/Core/FormObject.php	/^namespace App\\Core;$/;"	n	language:PHP
+App\\Core	src/Core/JsonResponse.php	/^namespace App\\Core;$/;"	n	language:PHP
 App\\Core	src/Core/QueryObject.php	/^namespace App\\Core;$/;"	n	language:PHP
 App\\Core\\Config	src/Core/Config/Environment.php	/^namespace App\\Core\\Config;$/;"	n	language:PHP
 App\\Core\\Logging	src/Core/Logging/ConsoleLogger.php	/^namespace App\\Core\\Logging;$/;"	n	language:PHP
 App\\Core\\Logging	src/Core/Logging/FileLogger.php	/^namespace App\\Core\\Logging;$/;"	n	language:PHP
 App\\Core\\Responders	src/Core/Responders/JsonResponder.php	/^namespace App\\Core\\Responders;$/;"	n	language:PHP
+App\\Core\\Testing	src/Core/Testing/ApiClient.php	/^namespace App\\Core\\Testing;$/;"	n	language:PHP
+App\\Core\\Testing	src/Core/Testing/ApiResponse.php	/^namespace App\\Core\\Testing;$/;"	n	language:PHP
+App\\Core\\Testing	src/Core/Testing/FixtureFactory.php	/^namespace App\\Core\\Testing;$/;"	n	language:PHP
+App\\Core\\Testing\\Exceptions	src/Core/Testing/Exceptions/ApiException.php	/^namespace App\\Core\\Testing\\Exceptions;$/;"	n	language:PHP
 App\\Database	src/Database/DatabaseInterface.php	/^namespace App\\Database;$/;"	n	language:PHP
 App\\Database\\Drivers	src/Database/Drivers/DynamoDbDriver.php	/^namespace App\\Database\\Drivers;$/;"	n	language:PHP
 App\\Database\\Drivers	src/Database/Drivers/MemoryDriver.php	/^namespace App\\Database\\Drivers;$/;"	n	language:PHP
@@ -38,6 +51,7 @@ App\\Database\\Drivers	src/Database/Drivers/SqliteDriver.php	/^namespace App\\Da
 App\\Database\\Entities	src/Database/Entities/AbstractEntity.php	/^namespace App\\Database\\Entities;$/;"	n	language:PHP
 App\\Database\\Entities	src/Database/Entities/PageEntity.php	/^namespace App\\Database\\Entities;$/;"	n	language:PHP
 App\\Database\\Entities	src/Database/Entities/UserEntity.php	/^namespace App\\Database\\Entities;$/;"	n	language:PHP
+App\\Database\\Exceptions	src/Database/Exceptions/DatabaseAccessDeniedException.php	/^namespace App\\Database\\Exceptions;$/;"	n	language:PHP
 App\\Database\\Exceptions	src/Database/Exceptions/DatabaseException.php	/^namespace App\\Database\\Exceptions;$/;"	n	language:PHP
 App\\Database\\Exceptions	src/Database/Exceptions/DuplicateRecordException.php	/^namespace App\\Database\\Exceptions;$/;"	n	language:PHP
 App\\Database\\Exceptions	src/Database/Exceptions/RecordNotFoundException.php	/^namespace App\\Database\\Exceptions;$/;"	n	language:PHP
@@ -47,6 +61,7 @@ App\\Database\\Repositories	src/Database/Repositories/PageRepository.php	/^names
 App\\Database\\Repositories	src/Database/Repositories/UserRepository.php	/^namespace App\\Database\\Repositories;$/;"	n	language:PHP
 App\\Exceptions	src/Exceptions/AbstractException.php	/^namespace App\\Exceptions;$/;"	n	language:PHP
 App\\Exceptions	src/Exceptions/BadRequestException.php	/^namespace App\\Exceptions;$/;"	n	language:PHP
+App\\Exceptions	src/Exceptions/BadResponseException.php	/^namespace App\\Exceptions;$/;"	n	language:PHP
 App\\Exceptions	src/Exceptions/ConfigException.php	/^namespace App\\Exceptions;$/;"	n	language:PHP
 App\\Exceptions	src/Exceptions/PageNotFoundException.php	/^namespace App\\Exceptions;$/;"	n	language:PHP
 App\\Exceptions	src/Exceptions/UnauthorizedException.php	/^namespace App\\Exceptions;$/;"	n	language:PHP
@@ -59,19 +74,25 @@ App\\OAuth\\Actions	src/OAuth/Actions/PasswordGrantAction.php	/^namespace App\\O
 App\\OAuth\\Objects	src/OAuth/Objects/TokenObject.php	/^namespace App\\OAuth\\Objects;$/;"	n	language:PHP
 App\\Pages	src/Pages/Markdown.php	/^namespace App\\Pages;$/;"	n	language:PHP
 App\\Pages	src/Pages/Pages.php	/^namespace App\\Pages;$/;"	n	language:PHP
+App\\Pages\\Actions	src/Pages/Actions/DeletePageAction.php	/^namespace App\\Pages\\Actions;$/;"	n	language:PHP
 App\\Pages\\Actions	src/Pages/Actions/GetPageAction.php	/^namespace App\\Pages\\Actions;$/;"	n	language:PHP
 App\\Pages\\Actions	src/Pages/Actions/PutPageAction.php	/^namespace App\\Pages\\Actions;$/;"	n	language:PHP
 App\\Pages\\Objects	src/Pages/Objects/PageObject.php	/^namespace App\\Pages\\Objects;$/;"	n	language:PHP
 App\\Pages\\Responders	src/Pages/Responders/PageResponder.php	/^namespace App\\Pages\\Responders;$/;"	n	language:PHP
 AuthInterface	src/Auth/AuthInterface.php	/^interface AuthInterface$/;"	i	language:PHP	namespace:App\\Auth
+AuthorizationMissingException	src/Auth/Exceptions/AuthorizationMissingException.php	/^class AuthorizationMissingException extends UnauthorizedException$/;"	c	language:PHP	namespace:App\\Auth\\Exceptions	inherits:UnauthorizedException
 BadRequestException	src/Exceptions/BadRequestException.php	/^class BadRequestException extends AbstractException$/;"	c	language:PHP	namespace:App\\Exceptions	inherits:AbstractException
+BadResponseException	src/Exceptions/BadResponseException.php	/^class BadResponseException extends AbstractException$/;"	c	language:PHP	namespace:App\\Exceptions	inherits:AbstractException
+BadTokenFormatException	src/Auth/Exceptions/BadTokenFormatException.php	/^class BadTokenFormatException extends UnauthorizedException$/;"	c	language:PHP	namespace:App\\Auth\\Exceptions	inherits:UnauthorizedException
+BadTokenSignatureException	src/Auth/Exceptions/BadTokenSignatureException.php	/^class BadTokenSignatureException extends UnauthorizedException$/;"	c	language:PHP	namespace:App\\Auth\\Exceptions	inherits:UnauthorizedException
 CREATED_AT_FIELD	src/Database/Entities/UserEntity.php	/^    private const CREATED_AT_FIELD = 'created_at';$/;"	d	language:PHP	class:App\\Database\\Entities\\UserEntity
 Config	src/Core/Config.php	/^class Config$/;"	c	language:PHP	namespace:App\\Core
 ConfigException	src/Exceptions/ConfigException.php	/^class ConfigException extends AbstractException$/;"	c	language:PHP	namespace:App\\Exceptions	inherits:AbstractException
 ConsoleLogger	src/Core/Logging/ConsoleLogger.php	/^class ConsoleLogger extends Logger$/;"	c	language:PHP	namespace:App\\Core\\Logging	inherits:Logger
+DatabaseAccessDeniedException	src/Database/Exceptions/DatabaseAccessDeniedException.php	/^class DatabaseAccessDeniedException extends DatabaseException$/;"	c	language:PHP	namespace:App\\Database\\Exceptions	inherits:DatabaseException
 DatabaseException	src/Database/Exceptions/DatabaseException.php	/^class DatabaseException extends AbstractException$/;"	c	language:PHP	namespace:App\\Database\\Exceptions	inherits:AbstractException
 DatabaseInterface	src/Database/DatabaseInterface.php	/^interface DatabaseInterface$/;"	i	language:PHP	namespace:App\\Database
-DefaultAuthClient	src/Auth/DefaultAuthClient.php	/^class DefaultAuthClient implements AuthInterface$/;"	c	language:PHP	namespace:App\\Auth	inherits:AuthInterface
+DeletePageAction	src/Pages/Actions/DeletePageAction.php	/^class DeletePageAction extends AbstractAction$/;"	c	language:PHP	namespace:App\\Pages\\Actions	inherits:AbstractAction
 DuplicateRecordException	src/Database/Exceptions/DuplicateRecordException.php	/^class DuplicateRecordException extends DatabaseException$/;"	c	language:PHP	namespace:App\\Database\\Exceptions	inherits:DatabaseException
 DynamoDbDriver	src/Database/Drivers/DynamoDbDriver.php	/^class DynamoDbDriver implements DatabaseInterface$/;"	c	language:PHP	namespace:App\\Database\\Drivers	inherits:DatabaseInterface
 DynamoDbUtils	src/Database/Helpers/DynamoDbUtils.php	/^class DynamoDbUtils$/;"	c	language:PHP	namespace:App\\Database\\Helpers
@@ -79,11 +100,13 @@ EMAIL_FIELD	src/Database/Entities/UserEntity.php	/^    private const EMAIL_FIELD
 Environment	src/Core/Config/Environment.php	/^class Environment$/;"	c	language:PHP	namespace:App\\Core\\Config
 ErrorHandlerMiddleware	src/Middleware/ErrorHandlerMiddleware.php	/^class ErrorHandlerMiddleware$/;"	c	language:PHP	namespace:App\\Middleware
 FileLogger	src/Core/Logging/FileLogger.php	/^class FileLogger extends Logger$/;"	c	language:PHP	namespace:App\\Core\\Logging	inherits:Logger
+FixtureFactory	src/Core/Testing/FixtureFactory.php	/^class FixtureFactory$/;"	c	language:PHP	namespace:App\\Core\\Testing
 FormObject	src/Core/FormObject.php	/^class FormObject$/;"	c	language:PHP	namespace:App\\Core
 GetPageAction	src/Pages/Actions/GetPageAction.php	/^class GetPageAction extends AbstractAction$/;"	c	language:PHP	namespace:App\\Pages\\Actions	inherits:AbstractAction
 ID_FIELD	src/Database/Entities/UserEntity.php	/^    private const ID_FIELD = 'id';$/;"	d	language:PHP	class:App\\Database\\Entities\\UserEntity
 IndexAction	src/Index/Actions/IndexAction.php	/^class IndexAction extends AbstractAction$/;"	c	language:PHP	namespace:App\\Index\\Actions	inherits:AbstractAction
 JsonResponder	src/Core/Responders/JsonResponder.php	/^class JsonResponder$/;"	c	language:PHP	namespace:App\\Core\\Responders
+JsonResponse	src/Core/JsonResponse.php	/^class JsonResponse extends Response$/;"	c	language:PHP	namespace:App\\Core	inherits:Response
 LOGIN_AT_FIELD	src/Database/Entities/UserEntity.php	/^    private const LOGIN_AT_FIELD = 'login_at';$/;"	d	language:PHP	class:App\\Database\\Entities\\UserEntity
 Markdown	src/Pages/Markdown.php	/^class Markdown$/;"	c	language:PHP	namespace:App\\Pages
 MemoryDriver	src/Database/Drivers/MemoryDriver.php	/^class MemoryDriver extends SqliteDriver$/;"	c	language:PHP	namespace:App\\Database\\Drivers	inherits:SqliteDriver
@@ -107,23 +130,33 @@ QueryObject	src/Core/QueryObject.php	/^class QueryObject$/;"	c	language:PHP	name
 RecordNotFoundException	src/Database/Exceptions/RecordNotFoundException.php	/^class RecordNotFoundException extends DatabaseException$/;"	c	language:PHP	namespace:App\\Database\\Exceptions	inherits:DatabaseException
 SqlUtils	src/Database/Helpers/SqlUtils.php	/^class SqlUtils$/;"	c	language:PHP	namespace:App\\Database\\Helpers
 SqliteDriver	src/Database/Drivers/SqliteDriver.php	/^class SqliteDriver implements DatabaseInterface$/;"	c	language:PHP	namespace:App\\Database\\Drivers	inherits:DatabaseInterface
+TokenAuthClient	src/Auth/TokenAuthClient.php	/^class TokenAuthClient implements AuthInterface$/;"	c	language:PHP	namespace:App\\Auth	inherits:AuthInterface
+TokenExpiredException	src/Auth/Exceptions/TokenExpiredException.php	/^class TokenExpiredException extends UnauthorizedException$/;"	c	language:PHP	namespace:App\\Auth\\Exceptions	inherits:UnauthorizedException
 TokenFactory	src/Auth/TokenFactory.php	/^class TokenFactory$/;"	c	language:PHP	namespace:App\\Auth
 TokenObject	src/OAuth/Objects/TokenObject.php	/^class TokenObject implements JsonSerializable$/;"	c	language:PHP	namespace:App\\OAuth\\Objects	inherits:JsonSerializable
 USERS_TABLE	src/Database/Drivers/DynamoDbDriver.php	/^    private const USERS_TABLE = 'users';$/;"	d	language:PHP	class:App\\Database\\Drivers\\DynamoDbDriver
 USERS_TABLE	src/Database/Drivers/SqliteDriver.php	/^    private const USERS_TABLE = 'users';$/;"	d	language:PHP	class:App\\Database\\Drivers\\SqliteDriver
 UnauthorizedException	src/Exceptions/UnauthorizedException.php	/^class UnauthorizedException extends AbstractException$/;"	c	language:PHP	namespace:App\\Exceptions	inherits:AbstractException
 UserEntity	src/Database/Entities/UserEntity.php	/^class UserEntity extends AbstractEntity$/;"	c	language:PHP	namespace:App\\Database\\Entities	inherits:AbstractEntity
-UserNotFoundException	src/Exceptions/UserNotFoundException.php	/^class UserNotFoundException extends AbstractException$/;"	c	language:PHP	namespace:App\\Exceptions	inherits:AbstractException
+UserNotFoundException	src/Exceptions/UserNotFoundException.php	/^class UserNotFoundException extends UnauthorizedException$/;"	c	language:PHP	namespace:App\\Exceptions	inherits:UnauthorizedException
 UserRepository	src/Database/Repositories/UserRepository.php	/^class UserRepository$/;"	c	language:PHP	namespace:App\\Database\\Repositories
-__construct	src/Auth/DefaultAuthClient.php	/^    public function __construct($/;"	f	language:PHP	class:App\\Auth\\DefaultAuthClient	access:public	signature:(private readonly TokenFactory $token, private readonly LoggerInterface $logger, private readonly UserRepository $users)
+__construct	src/Auth/Exceptions/AuthorizationMissingException.php	/^    public function __construct()$/;"	f	language:PHP	class:App\\Auth\\Exceptions\\AuthorizationMissingException	access:public	signature:()
+__construct	src/Auth/Exceptions/BadTokenFormatException.php	/^    public function __construct()$/;"	f	language:PHP	class:App\\Auth\\Exceptions\\BadTokenFormatException	access:public	signature:()
+__construct	src/Auth/Exceptions/BadTokenSignatureException.php	/^    public function __construct()$/;"	f	language:PHP	class:App\\Auth\\Exceptions\\BadTokenSignatureException	access:public	signature:()
+__construct	src/Auth/Exceptions/TokenExpiredException.php	/^    public function __construct()$/;"	f	language:PHP	class:App\\Auth\\Exceptions\\TokenExpiredException	access:public	signature:()
+__construct	src/Auth/TokenAuthClient.php	/^    public function __construct($/;"	f	language:PHP	class:App\\Auth\\TokenAuthClient	access:public	signature:(private readonly TokenFactory $token, private readonly LoggerInterface $logger, private readonly UserRepository $users)
 __construct	src/Auth/TokenFactory.php	/^    public function __construct(Config $config)$/;"	f	language:PHP	class:App\\Auth\\TokenFactory	access:public	signature:(Config $config)
 __construct	src/Core/Config.php	/^    public function __construct()$/;"	f	language:PHP	class:App\\Core\\Config	access:public	signature:()
 __construct	src/Core/Config/Environment.php	/^    public function __construct()$/;"	f	language:PHP	class:App\\Core\\Config\\Environment	access:public	signature:()
 __construct	src/Core/FormObject.php	/^    public function __construct(private array $params)$/;"	f	language:PHP	class:App\\Core\\FormObject	access:public	signature:(private array $params)
+__construct	src/Core/JsonResponse.php	/^    public function __construct(string|int|array|JsonSerializable $data, int $statusCode = 200)$/;"	f	language:PHP	class:App\\Core\\JsonResponse	access:public	signature:(string int array JsonSerializable $data, int $statusCode = 200)
 __construct	src/Core/Logging/ConsoleLogger.php	/^    public function __construct(Config $config)$/;"	f	language:PHP	class:App\\Core\\Logging\\ConsoleLogger	access:public	signature:(Config $config)
 __construct	src/Core/Logging/FileLogger.php	/^    public function __construct(Config $config)$/;"	f	language:PHP	class:App\\Core\\Logging\\FileLogger	access:public	signature:(Config $config)
 __construct	src/Core/QueryObject.php	/^    public function __construct(private array $params)$/;"	f	language:PHP	class:App\\Core\\QueryObject	access:public	signature:(private array $params)
-__construct	src/Database/Drivers/DynamoDbDriver.php	/^    public function __construct(Config $config)$/;"	f	language:PHP	class:App\\Database\\Drivers\\DynamoDbDriver	access:public	signature:(Config $config)
+__construct	src/Core/Testing/ApiClient.php	/^    public function __construct(Environment $env)$/;"	f	language:PHP	class:App\\Core\\Testing\\ApiClient	access:public	signature:(Environment $env)
+__construct	src/Core/Testing/ApiResponse.php	/^    public function __construct($/;"	f	language:PHP	class:App\\Core\\Testing\\ApiResponse	access:public	signature:(private readonly string $type, private readonly string $body, private readonly int $status, )
+__construct	src/Core/Testing/FixtureFactory.php	/^    public function __construct(private readonly UserRepository $users)$/;"	f	language:PHP	class:App\\Core\\Testing\\FixtureFactory	access:public	signature:(private readonly UserRepository $users)
+__construct	src/Database/Drivers/DynamoDbDriver.php	/^    public function __construct(Config $config, private readonly LoggerInterface $logger)$/;"	f	language:PHP	class:App\\Database\\Drivers\\DynamoDbDriver	access:public	signature:(Config $config, private readonly LoggerInterface $logger)
 __construct	src/Database/Drivers/MemoryDriver.php	/^    public function __construct(Config $config)$/;"	f	language:PHP	class:App\\Database\\Drivers\\MemoryDriver	access:public	signature:(Config $config)
 __construct	src/Database/Drivers/SqliteDriver.php	/^    public function __construct(Config $config)$/;"	f	language:PHP	class:App\\Database\\Drivers\\SqliteDriver	access:public	signature:(Config $config)
 __construct	src/Database/Entities/AbstractEntity.php	/^    public function __construct(array $props = [])$/;"	f	language:PHP	class:App\\Database\\Entities\\AbstractEntity	access:public	signature:(array $props = [])
@@ -135,6 +168,7 @@ __construct	src/Middleware/ErrorHandlerMiddleware.php	/^    public function __co
 __construct	src/Middleware/OpenCorsMiddleware.php	/^    public function __construct(private readonly ResponseFactoryInterface $rf)$/;"	f	language:PHP	class:App\\Middleware\\OpenCorsMiddleware	access:public	signature:(private readonly ResponseFactoryInterface $rf)
 __construct	src/OAuth/Actions/PasswordGrantAction.php	/^    public function __construct(private readonly JsonResponder $responder, private readonly OAut/;"	f	language:PHP	class:App\\OAuth\\Actions\\PasswordGrantAction	access:public	signature:(private readonly JsonResponder $responder, private readonly OAuth $oauth)
 __construct	src/OAuth/OAuth.php	/^    public function __construct($/;"	f	language:PHP	class:App\\OAuth\\OAuth	access:public	signature:(private readonly LoggerInterface $logger, private readonly TokenFactory $token, private readonly UserRepository $users, )
+__construct	src/Pages/Actions/DeletePageAction.php	/^    public function __construct(private readonly AuthInterface $auth, private readonly Pages $pa/;"	f	language:PHP	class:App\\Pages\\Actions\\DeletePageAction	access:public	signature:(private readonly AuthInterface $auth, private readonly Pages $pages)
 __construct	src/Pages/Actions/GetPageAction.php	/^    public function __construct($/;"	f	language:PHP	class:App\\Pages\\Actions\\GetPageAction	access:public	signature:(private readonly AuthInterface $auth, private readonly Pages $pages, private readonly PageResponder $responder, )
 __construct	src/Pages/Actions/PutPageAction.php	/^    public function __construct(private readonly AuthInterface $auth, private readonly Pages $pa/;"	f	language:PHP	class:App\\Pages\\Actions\\PutPageAction	access:public	signature:(private readonly AuthInterface $auth, private readonly Pages $pages)
 __construct	src/Pages/Markdown.php	/^    public function __construct()$/;"	f	language:PHP	class:App\\Pages\\Markdown	access:public	signature:()
@@ -145,6 +179,7 @@ __invoke	src/Index/Actions/IndexAction.php	/^    public function __invoke(Server
 __invoke	src/Middleware/ErrorHandlerMiddleware.php	/^    public function __invoke(Request $request, RequestHandler $handler): Response$/;"	f	language:PHP	class:App\\Middleware\\ErrorHandlerMiddleware	typeref:unknown:Response	access:public	signature:(Request $request, RequestHandler $handler)
 __invoke	src/Middleware/OpenCorsMiddleware.php	/^    public function __invoke(Request $request, RequestHandler $handler): Response$/;"	f	language:PHP	class:App\\Middleware\\OpenCorsMiddleware	typeref:unknown:Response	access:public	signature:(Request $request, RequestHandler $handler)
 __invoke	src/OAuth/Actions/PasswordGrantAction.php	/^    public function __invoke(ServerRequestInterface $request, ResponseInterface $response): Resp/;"	f	language:PHP	class:App\\OAuth\\Actions\\PasswordGrantAction	typeref:unknown:ResponseInterface	access:public	signature:(ServerRequestInterface $request, ResponseInterface $response)
+__invoke	src/Pages/Actions/DeletePageAction.php	/^    public function __invoke(ServerRequestInterface $request, ResponseInterface $response): Resp/;"	f	language:PHP	class:App\\Pages\\Actions\\DeletePageAction	typeref:unknown:ResponseInterface	access:public	signature:(ServerRequestInterface $request, ResponseInterface $response)
 __invoke	src/Pages/Actions/GetPageAction.php	/^    public function __invoke(ServerRequestInterface $request, ResponseInterface $response): Resp/;"	f	language:PHP	class:App\\Pages\\Actions\\GetPageAction	typeref:unknown:ResponseInterface	access:public	signature:(ServerRequestInterface $request, ResponseInterface $response)
 __invoke	src/Pages/Actions/PutPageAction.php	/^    public function __invoke(ServerRequestInterface $request, ResponseInterface $response): Resp/;"	f	language:PHP	class:App\\Pages\\Actions\\PutPageAction	typeref:unknown:ResponseInterface	access:public	signature:(ServerRequestInterface $request, ResponseInterface $response)
 add	src/Database/Drivers/SqliteDriver.php	/^    private function add(string $tableName, array $props): void$/;"	f	language:PHP	class:App\\Database\\Drivers\\SqliteDriver	typeref:unknown:void	access:private	signature:(string $tableName, array $props)
@@ -157,11 +192,12 @@ addUser	src/Database/DatabaseInterface.php	/^    public function addUser(array $
 addUser	src/Database/Drivers/DynamoDbDriver.php	/^    public function addUser(array $props): void$/;"	f	language:PHP	class:App\\Database\\Drivers\\DynamoDbDriver	typeref:unknown:void	access:public	signature:(array $props)
 addUser	src/Database/Drivers/SqliteDriver.php	/^    public function addUser(array $props): void$/;"	f	language:PHP	class:App\\Database\\Drivers\\SqliteDriver	typeref:unknown:void	access:public	signature:(array $props)
 authenticate	src/Auth/AuthInterface.php	/^    public function authenticate(ServerRequestInterface $request): UserEntity;$/;"	f	language:PHP	interface:App\\Auth\\AuthInterface	typeref:unknown:UserEntity	access:public	signature:(ServerRequestInterface $request)
-authenticate	src/Auth/DefaultAuthClient.php	/^    public function authenticate(ServerRequestInterface $request): UserEntity$/;"	f	language:PHP	class:App\\Auth\\DefaultAuthClient	typeref:unknown:UserEntity	access:public	signature:(ServerRequestInterface $request)
+authenticate	src/Auth/TokenAuthClient.php	/^    public function authenticate(ServerRequestInterface $request): UserEntity$/;"	f	language:PHP	class:App\\Auth\\TokenAuthClient	typeref:unknown:UserEntity	access:public	signature:(ServerRequestInterface $request)
 authorize	src/OAuth/OAuth.php	/^    public function authorize(string $userName, string $password): TokenObject$/;"	f	language:PHP	class:App\\OAuth\\OAuth	typeref:unknown:TokenObject	access:public	signature:(string $userName, string $password)
 buildAltWhere	src/Database/Helpers/SqlUtils.php	/^    public static function buildAltWhere(array &$params, array $where): string$/;"	f	language:PHP	class:App\\Database\\Helpers\\SqlUtils	typeref:unknown:string	access:public	signature:(array& $params, array $where)
 buildBaseUpdateQuery	src/Database/Helpers/DynamoDbUtils.php	/^    private static function buildBaseUpdateQuery(string $tableName, array $keys, bool $ifExists /;"	f	language:PHP	class:App\\Database\\Helpers\\DynamoDbUtils	typeref:unknown:array	access:private	signature:(string $tableName, array $keys, bool $ifExists = true)
 buildDelete	src/Database/Helpers/SqlUtils.php	/^    public static function buildDelete(string $tableName, array $keys): array$/;"	f	language:PHP	class:App\\Database\\Helpers\\SqlUtils	typeref:unknown:array	access:public	signature:(string $tableName, array $keys)
+buildDeleteQuery	src/Database/Helpers/DynamoDbUtils.php	/^    public static function buildDeleteQuery(string $tableName, array $keys): array$/;"	f	language:PHP	class:App\\Database\\Helpers\\DynamoDbUtils	typeref:unknown:array	access:public	signature:(string $tableName, array $keys)
 buildGetQuery	src/Database/Helpers/DynamoDbUtils.php	/^    public static function buildGetQuery(string $tableName, array $keys): array$/;"	f	language:PHP	class:App\\Database\\Helpers\\DynamoDbUtils	typeref:unknown:array	access:public	signature:(string $tableName, array $keys)
 buildIncrement	src/Database/Helpers/SqlUtils.php	/^    public static function buildIncrement(string $tableName, array $keys, array $props): array$/;"	f	language:PHP	class:App\\Database\\Helpers\\SqlUtils	typeref:unknown:array	access:public	signature:(string $tableName, array $keys, array $props)
 buildInsert	src/Database/Helpers/SqlUtils.php	/^    public static function buildInsert(string $tableName, array $props): array$/;"	f	language:PHP	class:App\\Database\\Helpers\\SqlUtils	typeref:unknown:array	access:public	signature:(string $tableName, array $props)
@@ -172,7 +208,14 @@ buildSelectCount	src/Database/Helpers/SqlUtils.php	/^    public static function 
 buildUpdate	src/Database/Helpers/SqlUtils.php	/^    public static function buildUpdate(string $tableName, array $where, array $props): array$/;"	f	language:PHP	class:App\\Database\\Helpers\\SqlUtils	typeref:unknown:array	access:public	signature:(string $tableName, array $where, array $props)
 buildUpdateQuery	src/Database/Helpers/DynamoDbUtils.php	/^    public static function buildUpdateQuery(string $tableName, array $keys, array $props): array$/;"	f	language:PHP	class:App\\Database\\Helpers\\DynamoDbUtils	typeref:unknown:array	access:public	signature:(string $tableName, array $keys, array $props)
 convert	src/Pages/Markdown.php	/^    public function convert(string $source): string$/;"	f	language:PHP	class:App\\Pages\\Markdown	typeref:unknown:string	access:public	signature:(string $source)
+dd	src/functions.php	/^function dd(): void$/;"	f	language:PHP	typeref:unknown:void	signature:()
 decode	src/Auth/TokenFactory.php	/^    public function decode(string $token): array$/;"	f	language:PHP	class:App\\Auth\\TokenFactory	typeref:unknown:array	access:public	signature:(string $token)
+delete	src/Database/Drivers/SqliteDriver.php	/^    private function delete(string $tableName, array $keys): void$/;"	f	language:PHP	class:App\\Database\\Drivers\\SqliteDriver	typeref:unknown:void	access:private	signature:(string $tableName, array $keys)
+delete	src/Database/Repositories/PageRepository.php	/^    public function delete(PageEntity $page): void$/;"	f	language:PHP	class:App\\Database\\Repositories\\PageRepository	typeref:unknown:void	access:public	signature:(PageEntity $page)
+delete	src/Pages/Pages.php	/^    public function delete(string $id, UserEntity $user): void$/;"	f	language:PHP	class:App\\Pages\\Pages	typeref:unknown:void	access:public	signature:(string $id, UserEntity $user)
+deletePage	src/Database/DatabaseInterface.php	/^    public function deletePage(string $id): void;$/;"	f	language:PHP	interface:App\\Database\\DatabaseInterface	typeref:unknown:void	access:public	signature:(string $id)
+deletePage	src/Database/Drivers/DynamoDbDriver.php	/^    public function deletePage(string $id): void$/;"	f	language:PHP	class:App\\Database\\Drivers\\DynamoDbDriver	typeref:unknown:void	access:public	signature:(string $id)
+deletePage	src/Database/Drivers/SqliteDriver.php	/^    public function deletePage(string $id): void$/;"	f	language:PHP	class:App\\Database\\Drivers\\SqliteDriver	typeref:unknown:void	access:public	signature:(string $id)
 encode	src/Auth/TokenFactory.php	/^    public function encode(array $data): string$/;"	f	language:PHP	class:App\\Auth\\TokenFactory	typeref:unknown:string	access:public	signature:(array $data)
 escapeCondition	src/Database/Helpers/SqlUtils.php	/^    private static function escapeCondition(string $condition): string$/;"	f	language:PHP	class:App\\Database\\Helpers\\SqlUtils	typeref:unknown:string	access:private	signature:(string $condition)
 extractFieldName	src/Database/Helpers/SqlUtils.php	/^    private static function extractFieldName(string $condition): string$/;"	f	language:PHP	class:App\\Database\\Helpers\\SqlUtils	typeref:unknown:string	access:private	signature:(string $condition)
@@ -180,10 +223,12 @@ fetch	src/Database/Drivers/SqliteDriver.php	/^    private function fetch(string 
 findPages	src/Database/DatabaseInterface.php	/^    public function findPages(): Generator;$/;"	f	language:PHP	interface:App\\Database\\DatabaseInterface	typeref:unknown:Generator	access:public	signature:()
 findPages	src/Database/Drivers/DynamoDbDriver.php	/^    public function findPages(): Generator$/;"	f	language:PHP	class:App\\Database\\Drivers\\DynamoDbDriver	typeref:unknown:Generator	access:public	signature:()
 findPages	src/Database/Drivers/SqliteDriver.php	/^    public function findPages(): Generator$/;"	f	language:PHP	class:App\\Database\\Drivers\\SqliteDriver	typeref:unknown:Generator	access:public	signature:()
+fixture	src/Core/AbstractTestCase.php	/^    protected function fixture(string $fileName): void$/;"	f	language:PHP	class:App\\Core\\AbstractTestCase	typeref:unknown:void	access:protected	signature:(string $fileName)
 fromArray	src/Core/Config.php	/^    public static function fromArray(array $props): self$/;"	f	language:PHP	class:App\\Core\\Config	typeref:class:Config	access:public	signature:(array $props)
 fromJSON	src/Core/FormObject.php	/^    public static function fromJSON(ServerRequestInterface $request): self$/;"	f	language:PHP	class:App\\Core\\FormObject	typeref:class:FormObject	access:public	signature:(ServerRequestInterface $request)
 fromRequest	src/Core/FormObject.php	/^    public static function fromRequest(ServerRequestInterface $request): self$/;"	f	language:PHP	class:App\\Core\\FormObject	typeref:class:FormObject	access:public	signature:(ServerRequestInterface $request)
 fromRequest	src/Core/QueryObject.php	/^    public static function fromRequest(ServerRequestInterface $req): self$/;"	f	language:PHP	class:App\\Core\\QueryObject	typeref:class:QueryObject	access:public	signature:(ServerRequestInterface $req)
+fromResponse	src/Core/Testing/ApiResponse.php	/^    public static function fromResponse(ResponseInterface $response): self$/;"	f	language:PHP	class:App\\Core\\Testing\\ApiResponse	typeref:class:ApiResponse	access:public	signature:(ResponseInterface $response)
 get	src/Core/Config/Environment.php	/^    public function get(string $key): ?string$/;"	f	language:PHP	class:App\\Core\\Config\\Environment	typeref:unknown:?string	access:public	signature:(string $key)
 get	src/Database/Drivers/SqliteDriver.php	/^    private function get(string $tableName, array $keys): array$/;"	f	language:PHP	class:App\\Database\\Drivers\\SqliteDriver	typeref:unknown:array	access:private	signature:(string $tableName, array $keys)
 get	src/Database/Repositories/PageRepository.php	/^    public function get(string $id): PageEntity$/;"	f	language:PHP	class:App\\Database\\Repositories\\PageRepository	typeref:unknown:PageEntity	access:public	signature:(string $id)
@@ -196,6 +241,7 @@ getBool	src/Core/QueryObject.php	/^    public function getBool(string $key): boo
 getClient	src/Database/Drivers/DynamoDbDriver.php	/^    private function getClient(): DynamoDbClient$/;"	f	language:PHP	class:App\\Database\\Drivers\\DynamoDbDriver	typeref:unknown:DynamoDbClient	access:private	signature:()
 getConnectionOptions	src/Database/Drivers/SqliteDriver.php	/^    protected static function getConnectionOptions(): array$/;"	f	language:PHP	class:App\\Database\\Drivers\\SqliteDriver	typeref:unknown:array	access:protected	signature:()
 getContainer	src/Core/AbstractTestCase.php	/^    private function getContainer(): ContainerInterface$/;"	f	language:PHP	class:App\\Core\\AbstractTestCase	typeref:unknown:ContainerInterface	access:private	signature:()
+getContentType	src/Core/Testing/ApiResponse.php	/^    private static function getContentType(ResponseInterface $response): string$/;"	f	language:PHP	class:App\\Core\\Testing\\ApiResponse	typeref:unknown:string	access:private	signature:(ResponseInterface $response)
 getCreated	src/Database/Entities/PageEntity.php	/^    public function getCreated(): int$/;"	f	language:PHP	class:App\\Database\\Entities\\PageEntity	typeref:unknown:int	access:public	signature:()
 getCreatedAt	src/Database/Entities/UserEntity.php	/^    public function getCreatedAt(): int$/;"	f	language:PHP	class:App\\Database\\Entities\\UserEntity	typeref:unknown:int	access:public	signature:()
 getDSN	src/Database/Drivers/MemoryDriver.php	/^    protected function getDSN(Config $config): string$/;"	f	language:PHP	class:App\\Database\\Drivers\\MemoryDriver	typeref:unknown:string	access:protected	signature:(Config $config)
@@ -211,6 +257,7 @@ getInt	src/Core/Config.php	/^    public function getInt(string $key, ?int $defau
 getInt	src/Core/FormObject.php	/^    public function getInt(string $key): ?int$/;"	f	language:PHP	class:App\\Core\\FormObject	typeref:unknown:?int	access:public	signature:(string $key)
 getInt	src/Core/QueryObject.php	/^    public function getInt(string $key): ?int$/;"	f	language:PHP	class:App\\Core\\QueryObject	typeref:unknown:?int	access:public	signature:(string $key)
 getInt	src/Database/Entities/AbstractEntity.php	/^    protected function getInt(string $key): ?int$/;"	f	language:PHP	class:App\\Database\\Entities\\AbstractEntity	typeref:unknown:?int	access:protected	signature:(string $key)
+getJSON	src/Core/Testing/ApiResponse.php	/^    public function getJSON(): array$/;"	f	language:PHP	class:App\\Core\\Testing\\ApiResponse	typeref:unknown:array	access:public	signature:()
 getLoginAt	src/Database/Entities/UserEntity.php	/^    public function getLoginAt(): int$/;"	f	language:PHP	class:App\\Database\\Entities\\UserEntity	typeref:unknown:int	access:public	signature:()
 getPage	src/Database/DatabaseInterface.php	/^    public function getPage(string $id): array;$/;"	f	language:PHP	interface:App\\Database\\DatabaseInterface	typeref:unknown:array	access:public	signature:(string $id)
 getPage	src/Database/Drivers/DynamoDbDriver.php	/^    public function getPage(string $id): array$/;"	f	language:PHP	class:App\\Database\\Drivers\\DynamoDbDriver	typeref:unknown:array	access:public	signature:(string $id)
@@ -218,24 +265,31 @@ getPage	src/Database/Drivers/SqliteDriver.php	/^    public function getPage(stri
 getPassword	src/Database/Entities/UserEntity.php	/^    public function getPassword(): string$/;"	f	language:PHP	class:App\\Database\\Entities\\UserEntity	typeref:unknown:string	access:public	signature:()
 getResponse	src/Exceptions/AbstractException.php	/^    public function getResponse(): array$/;"	f	language:PHP	class:App\\Exceptions\\AbstractException	typeref:unknown:array	access:public	signature:()
 getRouteArg	src/Core/AbstractAction.php	/^    protected function getRouteArg(ServerRequestInterface $request, string $name): string$/;"	f	language:PHP	class:App\\Core\\AbstractAction	typeref:unknown:string	access:protected	signature:(ServerRequestInterface $request, string $name)
+getStatusCode	src/Auth/Exceptions/AuthorizationMissingException.php	/^    public function getStatusCode(): int$/;"	f	language:PHP	class:App\\Auth\\Exceptions\\AuthorizationMissingException	typeref:unknown:int	access:public	signature:()
+getStatusCode	src/Auth/Exceptions/BadTokenFormatException.php	/^    public function getStatusCode(): int$/;"	f	language:PHP	class:App\\Auth\\Exceptions\\BadTokenFormatException	typeref:unknown:int	access:public	signature:()
+getStatusCode	src/Auth/Exceptions/BadTokenSignatureException.php	/^    public function getStatusCode(): int$/;"	f	language:PHP	class:App\\Auth\\Exceptions\\BadTokenSignatureException	typeref:unknown:int	access:public	signature:()
+getStatusCode	src/Auth/Exceptions/TokenExpiredException.php	/^    public function getStatusCode(): int$/;"	f	language:PHP	class:App\\Auth\\Exceptions\\TokenExpiredException	typeref:unknown:int	access:public	signature:()
+getStatusCode	src/Core/Testing/ApiResponse.php	/^    public function getStatusCode(): int$/;"	f	language:PHP	class:App\\Core\\Testing\\ApiResponse	typeref:unknown:int	access:public	signature:()
 getStatusCode	src/Exceptions/AbstractException.php	/^    public function getStatusCode(): int$/;"	f	language:PHP	class:App\\Exceptions\\AbstractException	typeref:unknown:int	access:public	signature:()
 getStatusCode	src/Exceptions/BadRequestException.php	/^    public function getStatusCode(): int$/;"	f	language:PHP	class:App\\Exceptions\\BadRequestException	typeref:unknown:int	access:public	signature:()
+getStatusCode	src/Exceptions/BadResponseException.php	/^    public function getStatusCode(): int$/;"	f	language:PHP	class:App\\Exceptions\\BadResponseException	typeref:unknown:int	access:public	signature:()
 getStatusCode	src/Exceptions/PageNotFoundException.php	/^    public function getStatusCode(): int$/;"	f	language:PHP	class:App\\Exceptions\\PageNotFoundException	typeref:unknown:int	access:public	signature:()
 getStatusCode	src/Exceptions/UnauthorizedException.php	/^    public function getStatusCode(): int$/;"	f	language:PHP	class:App\\Exceptions\\UnauthorizedException	typeref:unknown:int	access:public	signature:()
 getStatusCode	src/Exceptions/UserNotFoundException.php	/^    public function getStatusCode(): int$/;"	f	language:PHP	class:App\\Exceptions\\UserNotFoundException	typeref:unknown:int	access:public	signature:()
 getString	src/Core/Config.php	/^    public function getString(string $key): ?string$/;"	f	language:PHP	class:App\\Core\\Config	typeref:unknown:?string	access:public	signature:(string $key)
 getString	src/Core/FormObject.php	/^    public function getString(string $key): ?string$/;"	f	language:PHP	class:App\\Core\\FormObject	typeref:unknown:?string	access:public	signature:(string $key)
 getString	src/Core/QueryObject.php	/^    public function getString(string $key): ?string$/;"	f	language:PHP	class:App\\Core\\QueryObject	typeref:unknown:?string	access:public	signature:(string $key)
+getString	src/Core/Testing/ApiResponse.php	/^    public function getString(): string$/;"	f	language:PHP	class:App\\Core\\Testing\\ApiResponse	typeref:unknown:string	access:public	signature:()
 getString	src/Database/Entities/AbstractEntity.php	/^    protected function getString(string $key): ?string$/;"	f	language:PHP	class:App\\Database\\Entities\\AbstractEntity	typeref:unknown:?string	access:protected	signature:(string $key)
 getStrings	src/Core/FormObject.php	/^    public function getStrings(string $key): array$/;"	f	language:PHP	class:App\\Core\\FormObject	typeref:unknown:array	access:public	signature:(string $key)
 getText	src/Database/Entities/PageEntity.php	/^    public function getText(): string$/;"	f	language:PHP	class:App\\Database\\Entities\\PageEntity	typeref:unknown:string	access:public	signature:()
-getToken	src/Auth/DefaultAuthClient.php	/^    private function getToken(ServerRequestInterface $request): string$/;"	f	language:PHP	class:App\\Auth\\DefaultAuthClient	typeref:unknown:string	access:private	signature:(ServerRequestInterface $request)
+getToken	src/Auth/TokenAuthClient.php	/^    private function getToken(ServerRequestInterface $request): string$/;"	f	language:PHP	class:App\\Auth\\TokenAuthClient	typeref:unknown:string	access:private	signature:(ServerRequestInterface $request)
 getUpdated	src/Database/Entities/PageEntity.php	/^    public function getUpdated(): int$/;"	f	language:PHP	class:App\\Database\\Entities\\PageEntity	typeref:unknown:int	access:public	signature:()
 getUser	src/Database/DatabaseInterface.php	/^    public function getUser(string $id): array;$/;"	f	language:PHP	interface:App\\Database\\DatabaseInterface	typeref:unknown:array	access:public	signature:(string $id)
 getUser	src/Database/Drivers/DynamoDbDriver.php	/^    public function getUser(string $id): array$/;"	f	language:PHP	class:App\\Database\\Drivers\\DynamoDbDriver	typeref:unknown:array	access:public	signature:(string $id)
 getUser	src/Database/Drivers/SqliteDriver.php	/^    public function getUser(string $id): array$/;"	f	language:PHP	class:App\\Database\\Drivers\\SqliteDriver	typeref:unknown:array	access:public	signature:(string $id)
 getUser	src/OAuth/OAuth.php	/^    private function getUser(string $userName): UserEntity$/;"	f	language:PHP	class:App\\OAuth\\OAuth	typeref:unknown:UserEntity	access:private	signature:(string $userName)
-getUserId	src/Auth/DefaultAuthClient.php	/^    private function getUserId(ServerRequestInterface $request): string$/;"	f	language:PHP	class:App\\Auth\\DefaultAuthClient	typeref:unknown:string	access:private	signature:(ServerRequestInterface $request)
+getUserId	src/Auth/TokenAuthClient.php	/^    private function getUserId(ServerRequestInterface $request): string$/;"	f	language:PHP	class:App\\Auth\\TokenAuthClient	typeref:unknown:string	access:private	signature:(ServerRequestInterface $request)
 initSchema	src/Database/Drivers/MemoryDriver.php	/^    private function initSchema(): void$/;"	f	language:PHP	class:App\\Database\\Drivers\\MemoryDriver	typeref:unknown:void	access:private	signature:()
 isNull	src/Database/Helpers/DynamoDbUtils.php	/^    private static function isNull(array $prop): bool$/;"	f	language:PHP	class:App\\Database\\Helpers\\DynamoDbUtils	typeref:unknown:bool	access:private	signature:(array $prop)
 isNumericArray	src/Database/Helpers/DynamoDbUtils.php	/^    private static function isNumericArray(array $value): bool$/;"	f	language:PHP	class:App\\Database\\Helpers\\DynamoDbUtils	typeref:unknown:bool	access:private	signature:(array $value)
@@ -243,18 +297,21 @@ iter	src/Database/Repositories/PageRepository.php	/^    public function iter(): 
 jsonSerialize	src/OAuth/Objects/TokenObject.php	/^    public function jsonSerialize(): array$/;"	f	language:PHP	class:App\\OAuth\\Objects\\TokenObject	typeref:unknown:array	access:public	signature:()
 load	src/Core/Config/Environment.php	/^    private function load(): array$/;"	f	language:PHP	class:App\\Core\\Config\\Environment	typeref:unknown:array	access:private	signature:()
 loadProps	src/Core/Config.php	/^    private function loadProps(): array$/;"	f	language:PHP	class:App\\Core\\Config	typeref:unknown:array	access:private	signature:()
+locate	src/Core/Testing/FixtureFactory.php	/^    public function locate(string $fileName): ?string$/;"	f	language:PHP	class:App\\Core\\Testing\\FixtureFactory	typeref:unknown:?string	access:public	signature:(string $fileName)
 prepare	src/Database/Drivers/SqliteDriver.php	/^    private function prepare(string $query): PDOStatement$/;"	f	language:PHP	class:App\\Database\\Drivers\\SqliteDriver	typeref:unknown:PDOStatement	access:private	signature:(string $query)
+processFile	src/Core/Testing/FixtureFactory.php	/^    public function processFile(string $filePath): void$/;"	f	language:PHP	class:App\\Core\\Testing\\FixtureFactory	typeref:unknown:void	access:public	signature:(string $filePath)
 put	src/Pages/Pages.php	/^    public function put(string $id, string $text, UserEntity $user): void$/;"	f	language:PHP	class:App\\Pages\\Pages	typeref:unknown:void	access:public	signature:(string $id, string $text, UserEntity $user)
 query	src/Database/Drivers/SqliteDriver.php	/^    private function query(string $query, array $params): PDOStatement$/;"	f	language:PHP	class:App\\Database\\Drivers\\SqliteDriver	typeref:unknown:PDOStatement	access:private	signature:(string $query, array $params)
 reportError	src/Middleware/ErrorHandlerMiddleware.php	/^    private function reportError(Throwable $e): void$/;"	f	language:PHP	class:App\\Middleware\\ErrorHandlerMiddleware	typeref:unknown:void	access:private	signature:(Throwable $e)
 req	src/Core/Config/Environment.php	/^    public function req(string $key): string$/;"	f	language:PHP	class:App\\Core\\Config\\Environment	typeref:unknown:string	access:public	signature:(string $key)
+request	src/Core/Testing/ApiClient.php	/^    public function request(string $method, string $path, array $options): ApiResponse$/;"	f	language:PHP	class:App\\Core\\Testing\\ApiClient	typeref:unknown:ApiResponse	access:public	signature:(string $method, string $path, array $options)
 requireInt	src/Database/Entities/AbstractEntity.php	/^    protected function requireInt(string $key): int$/;"	f	language:PHP	class:App\\Database\\Entities\\AbstractEntity	typeref:unknown:int	access:protected	signature:(string $key)
 requireString	src/Core/Config.php	/^    public function requireString(string $key): string$/;"	f	language:PHP	class:App\\Core\\Config	typeref:unknown:string	access:public	signature:(string $key)
 requireString	src/Core/FormObject.php	/^    public function requireString(string $key): string$/;"	f	language:PHP	class:App\\Core\\FormObject	typeref:unknown:string	access:public	signature:(string $key)
 requireString	src/Core/QueryObject.php	/^    public function requireString(string $key): string$/;"	f	language:PHP	class:App\\Core\\QueryObject	typeref:unknown:string	access:public	signature:(string $key)
 requireString	src/Database/Entities/AbstractEntity.php	/^    protected function requireString(string $key): string$/;"	f	language:PHP	class:App\\Database\\Entities\\AbstractEntity	typeref:unknown:string	access:protected	signature:(string $key)
 respond	src/Core/Responders/JsonResponder.php	/^    public function respond(ResponseInterface $response, JsonSerializable $data): ResponseInterf/;"	f	language:PHP	class:App\\Core\\Responders\\JsonResponder	typeref:unknown:ResponseInterface	access:public	signature:(ResponseInterface $response, JsonSerializable $data)
-respond	src/Pages/Responders/PageResponder.php	/^    public function respond(ResponseInterface $response, PageObject $page): ResponseInterface$/;"	f	language:PHP	class:App\\Pages\\Responders\\PageResponder	typeref:unknown:ResponseInterface	access:public	signature:(ResponseInterface $response, PageObject $page)
+respond	src/Pages/Responders/PageResponder.php	/^    public function respond(PageObject $page): ResponseInterface$/;"	f	language:PHP	class:App\\Pages\\Responders\\PageResponder	typeref:unknown:ResponseInterface	access:public	signature:(PageObject $page)
 run	src/App.php	/^    public static function run(): void$/;"	f	language:PHP	class:App\\App	typeref:unknown:void	access:public	signature:()
 sendError	src/Middleware/ErrorHandlerMiddleware.php	/^    private function sendError(Throwable $e, int $status): Response$/;"	f	language:PHP	class:App\\Middleware\\ErrorHandlerMiddleware	typeref:unknown:Response	access:private	signature:(Throwable $e, int $status)
 sendJSON	src/Core/AbstractResponder.php	/^    protected function sendJSON(ResponseInterface $response, array $data): ResponseInterface$/;"	f	language:PHP	class:App\\Core\\AbstractResponder	typeref:unknown:ResponseInterface	access:protected	signature:(ResponseInterface $response, array $data)
@@ -272,6 +329,7 @@ setPassword	src/Database/Entities/UserEntity.php	/^    public function setPasswo
 setString	src/Database/Entities/AbstractEntity.php	/^    protected function setString(string $key, string $value): void$/;"	f	language:PHP	class:App\\Database\\Entities\\AbstractEntity	typeref:unknown:void	access:protected	signature:(string $key, string $value)
 setText	src/Database/Entities/PageEntity.php	/^    public function setText(string $value): void$/;"	f	language:PHP	class:App\\Database\\Entities\\PageEntity	typeref:unknown:void	access:public	signature:(string $value)
 setUp	src/Core/AbstractTestCase.php	/^    protected function setUp(): void$/;"	f	language:PHP	class:App\\Core\\AbstractTestCase	typeref:unknown:void	access:protected	signature:()
+setUpTables	src/Core/Testing/FixtureFactory.php	/^    private function setUpTables(array $tables): void$/;"	f	language:PHP	class:App\\Core\\Testing\\FixtureFactory	typeref:unknown:void	access:private	signature:(array $tables)
 setUpdated	src/Database/Entities/PageEntity.php	/^    public function setUpdated(int $value): void$/;"	f	language:PHP	class:App\\Database\\Entities\\PageEntity	typeref:unknown:void	access:public	signature:(int $value)
 testEnvironment	src/Core/AbstractTestCase.php	/^    public function testEnvironment(): void$/;"	f	language:PHP	class:App\\Core\\AbstractTestCase	typeref:unknown:void	access:public	signature:()
 toArray	src/Core/FormObject.php	/^    public function toArray(): array$/;"	f	language:PHP	class:App\\Core\\FormObject	typeref:unknown:array	access:public	signature:()
@@ -293,6 +351,6 @@ withAccessToken	src/OAuth/Objects/TokenObject.php	/^    public function withAcce
 withEntity	src/Pages/Objects/PageObject.php	/^    public function withEntity(PageEntity $page): self$/;"	f	language:PHP	class:App\\Pages\\Objects\\PageObject	typeref:class:PageObject	access:public	signature:(PageEntity $page)
 withHTML	src/Pages/Objects/PageObject.php	/^    public function withHTML(string $html): self$/;"	f	language:PHP	class:App\\Pages\\Objects\\PageObject	typeref:class:PageObject	access:public	signature:(string $html)
 wrap	src/Database/Helpers/DynamoDbUtils.php	/^    public static function wrap(array $props): array$/;"	f	language:PHP	class:App\\Database\\Helpers\\DynamoDbUtils	typeref:unknown:array	access:public	signature:(array $props)
-wrapException	src/Database/Drivers/DynamoDbDriver.php	/^    private static function wrapException(Throwable $e): DatabaseException$/;"	f	language:PHP	class:App\\Database\\Drivers\\DynamoDbDriver	typeref:unknown:DatabaseException	access:private	signature:(Throwable $e)
+wrapException	src/Database/Drivers/DynamoDbDriver.php	/^    private function wrapException(Throwable $e): DatabaseException$/;"	f	language:PHP	class:App\\Database\\Drivers\\DynamoDbDriver	typeref:unknown:DatabaseException	access:private	signature:(Throwable $e)
 wrapException	src/Database/Drivers/SqliteDriver.php	/^    protected function wrapException(PDOException $e): DatabaseException$/;"	f	language:PHP	class:App\\Database\\Drivers\\SqliteDriver	typeref:unknown:DatabaseException	access:protected	signature:(PDOException $e)
 wrapTableName	src/Database/Drivers/DynamoDbDriver.php	/^    private function wrapTableName(string $tableName): string$/;"	f	language:PHP	class:App\\Database\\Drivers\\DynamoDbDriver	typeref:unknown:string	access:private	signature:(string $tableName)
