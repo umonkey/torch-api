@@ -76,10 +76,30 @@ class PagesTests extends AbstractIntegrationTests
 
             // Delete page.
             $res = $this->deletePage($pageId, $token);
-            self::assertEquals(200, $res->getStatusCode(), $res->getString());
+            self::assertEquals(202, $res->getStatusCode(), $res->getString());
         } finally {
             // Just in case we failed, double check.
             $this->deletePage($pageId, $token);
+        }
+    }
+
+    /**
+     * @depends testLogIn
+     * @throws ApiException
+     * @throws BadResponseException
+     */
+    public function testListPages(string $token): void
+    {
+        $res = $this->request('GET', '/v1/pages', [
+            'headers' => [
+                'authorization' => 'bearer ' . $token,
+            ],
+        ]);
+
+        self::assertEquals(200, $res->getStatusCode());
+
+        foreach ($res->getJSON() as $item) {
+            self::assertArrayHasKey('id', $item);
         }
     }
 

@@ -1,0 +1,11 @@
+tables:
+  pages:
+    - id: foobar
+      text: "# hello"
+    - id: snafu
+      text: "# snafu"
+
+  users:
+    - id: phpunit
+      email: test@example.com
+      password: secret
