@@ -35,4 +35,10 @@ jobs:
       - name: Run tests
         run: composer run-script test
 
+      - name: Upload code coverage
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: var/clover.xml
+
 # vim: set ts=2 sts=2 sw=2 et:
