@@ -1,4 +1,4 @@
-name: deploy-kb
+name: test
 
 on:
   push:
