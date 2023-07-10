@@ -18,3 +18,4 @@ This is an API for a simple private wiki.  Details TBD.
 - [ ] Database boostraping code, create user etc.
 - [ ] DynamoDB: database setup code, permissions, etc.
 - [ ] Public read-only access.
+- [ ] Database: add support for Google Bigtable.
