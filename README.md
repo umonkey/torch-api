@@ -8,6 +8,8 @@ This is an API for a simple private wiki.  Details TBD.
 
 - Private access only.
 - Data stored in SQLite or Amazon DynamoDB.
+- Markdown formatting, no special syntax.
+- Page id differs from page title.
 
 
 ## TODO
