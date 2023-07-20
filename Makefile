@@ -10,7 +10,7 @@ ifndef WIKI_API_DEPLOY_REMOTE
 endif
 	composer install --no-dev
 	composer dump-autoload -o
-	rsync -avzu --delete --delete-after -e "ssh -o StrictHostKeyChecking=no" config public src vendor $(WIKI_API_DEPLOY_REMOTE)
+	rsync -avzu -c --delete --delete-after -e "ssh -o StrictHostKeyChecking=no" bin config public src vendor $(WIKI_API_DEPLOY_REMOTE)
 
 db:
 	sqlite3 var/database.sqlite
