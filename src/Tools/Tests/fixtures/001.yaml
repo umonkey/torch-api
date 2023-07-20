@@ -1,0 +1,13 @@
+tables:
+  pages:
+    - id: test
+      created: 12345
+      updated: 12346
+      text: "Hello, world."
+
+  users:
+    - id: test
+      created_at: 12345
+      password: "secret"
+      email: "test@example.com"
+      login_at: 12346

@@ -8,6 +8,9 @@ use App\Core\Config\Environment;
 use DI\Container;
 use Throwable;
 
+/**
+ * @codeCoverageIgnore
+ */
 abstract class AbstractCommand
 {
     /**

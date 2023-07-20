@@ -30,6 +30,7 @@ lint-composer:
 	composer validate --strict
 
 phpunit:
+	rm -f var/errors.log
 ifneq (,$(FILTER))
 	composer run phpunit -- -- --filter "$(FILTER)"
 else

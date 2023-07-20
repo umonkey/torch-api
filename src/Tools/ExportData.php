@@ -8,23 +8,36 @@ use App\Database\Exceptions\DatabaseException;
 use App\Database\Repositories\PageRepository;
 use App\Database\Repositories\UserRepository;
 use JsonException;
+use Psr\Log\LoggerInterface;
 use ZipArchive;
 
 class ExportData extends AbstractCommand
 {
-    public function __construct(private readonly PageRepository $pages, private readonly UserRepository $users)
-    {
+    public function __construct(
+        private readonly LoggerInterface $logger,
+        private readonly PageRepository $pages,
+        private readonly UserRepository $users,
+    ) {
     }
 
     /**
      * @param string[] $args
      * @throws DatabaseException
      * @throws JsonException
+     * @codeCoverageIgnore
      */
     public function __invoke(array $args): void
     {
         $fileName = sprintf('archive-%s.zip', strftime('%Y%m%d-%H%M'));
+        $this->export($fileName);
+    }
 
+    /**
+     * @throws DatabaseException
+     * @throws JsonException
+     */
+    public function export(string $fileName): void
+    {
         $zip = new ZipArchive();
         $zip->open($fileName, ZipArchive::CREATE);
 
@@ -33,7 +46,7 @@ class ExportData extends AbstractCommand
 
         $zip->close();
 
-        fprintf(STDOUT, "Wrote %s\n", $fileName);
+        $this->logger->info(sprintf('Wrote %s', $fileName));
     }
 
     /**
@@ -55,7 +68,7 @@ class ExportData extends AbstractCommand
 
             $zip->addFromString($fileName, $json);
 
-            fprintf(STDOUT, "Wrote page %s as %s\n", $item->getId(), $fileName);
+            $this->logger->debug(sprintf('Wrote page %s as %s', $item->getId(), $fileName));
         }
     }
 
@@ -78,7 +91,7 @@ class ExportData extends AbstractCommand
 
             $zip->addFromString($fileName, $json);
 
-            fprintf(STDOUT, "Wrote user %s as %s\n", $item->getId(), $fileName);
+            $this->logger->debug(sprintf('Wrote user %s as %s', $item->getId(), $fileName));
         }
     }
 }
