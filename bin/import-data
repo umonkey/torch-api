@@ -3,8 +3,8 @@
 
 declare(strict_types=1);
 
-use App\Tools\ExportData;
+use App\Tools\ImportData;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-ExportData::run();
+ImportData::run();

@@ -55,8 +55,8 @@
         ],
         "lint": [
             "composer validate --strict",
-            "composer exec phpstan -- --configuration=dev/phpstan.neon analyze --no-progress --no-ansi src config",
-            "composer exec phpcs -- -s -q --standard=dev/phpcs.xml --basepath=. src config"
+            "composer exec phpstan -- --configuration=dev/phpstan.neon analyze --no-progress --no-ansi bin src config",
+            "composer exec phpcs -- -s -q --standard=dev/phpcs.xml --basepath=. bin src config"
         ],
         "phpunit": [
             "composer exec phpunit",

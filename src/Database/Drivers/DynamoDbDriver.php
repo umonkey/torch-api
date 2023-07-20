@@ -118,8 +118,13 @@ class DynamoDbDriver implements DatabaseInterface
     public function updatePage(array $props): void
     {
         try {
+            $id = $props['id']
+                ?? throw new DatabaseException('page id not set');
+
+            unset($props['id']);
+
             $query = DynamoDbUtils::buildUpdateQuery($this->wrapTableName(self::PAGES_TABLE), [
-                'id' => $props['id'] ?? throw new DatabaseException('page id not set'),
+                'id' => $id,
             ], $props);
 
             $this->getClient()->updateItem($query);
