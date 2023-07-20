@@ -187,6 +187,34 @@ class DynamoDbDriver implements DatabaseInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function findUsers(): Generator
+    {
+        try {
+            $cursor = null;
+
+            do {
+                $query = DynamoDbUtils::buildScanQuery($this->wrapTableName(self::USERS_TABLE), $cursor);
+
+                $res = $this->getClient()->scan($query);
+
+                if (isset($res['Items'])) {
+                    foreach ($res['Items'] as $item) {
+                        yield DynamoDbUtils::unwrap($item);
+                    }
+                }
+
+                $cursor = $res['LastEvaluatedKey'] ?? null;
+            } while ($cursor !== null);
+        } catch (DatabaseException $e) {
+            throw $e;
+        } catch (Throwable $e) {
+            $this->wrapException($e);
+        }
+    }
+
+    /**
      * @throws DatabaseException
      */
     public function addUser(array $props): void

@@ -7,6 +7,7 @@ namespace App\Database\Repositories;
 use App\Database\DatabaseInterface;
 use App\Database\Entities\UserEntity;
 use App\Database\Exceptions\DatabaseException;
+use Generator;
 
 class UserRepository
 {
@@ -38,5 +39,16 @@ class UserRepository
     public function update(UserEntity $user): void
     {
         $this->db->updateUser($user->toArray());
+    }
+
+    /**
+     * @return UserEntity[]|Generator
+     * @throws DatabaseException
+     */
+    public function iter(): Generator
+    {
+        foreach ($this->db->findUsers() as $row) {
+            yield new UserEntity($row);
+        }
     }
 }

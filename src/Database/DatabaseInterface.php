@@ -59,4 +59,10 @@ interface DatabaseInterface
      * @throws DatabaseException
      */
     public function updateUser(array $props): void;
+
+    /**
+     * @return mixed[]|Generator
+     * @throws DatabaseException
+     */
+    public function findUsers(): Generator;
 }

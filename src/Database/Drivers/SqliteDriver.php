@@ -98,6 +98,18 @@ class SqliteDriver implements DatabaseInterface
     /**
      * @inheritDoc
      */
+    public function findUsers(): Generator
+    {
+        [$query, $params] = SqlUtils::buildSelect(self::USERS_TABLE, [], []);
+
+        foreach ($this->fetch($query, $params) as $row) {
+            yield $row;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function addUser(array $props): void
     {
         $this->add(self::USERS_TABLE, $props);

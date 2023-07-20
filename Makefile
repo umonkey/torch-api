@@ -15,6 +15,11 @@ endif
 db:
 	sqlite3 var/database.sqlite
 
+export:
+	mkdir -p var/export
+	rm -f var/export/*.json
+	bin/export-data var/export
+
 integration-tests:
 	composer run-script integration-tests
 

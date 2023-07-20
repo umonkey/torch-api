@@ -1,0 +1,12 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use App\Tools\CommandLine;
+use App\Tools\ExportData;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+ExportData::run();
+// CommandLine::run($argv, ExportData::class);
