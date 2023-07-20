@@ -19,7 +19,7 @@ class Container extends Base
      */
     public function __construct()
     {
-        $config = include 'config/dependencies.php';
+        $config = include __DIR__ . '/../../config/dependencies.php';
         parent::__construct($config);
 
         $this->setupEnvironment();
