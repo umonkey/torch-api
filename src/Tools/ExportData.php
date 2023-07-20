@@ -7,7 +7,8 @@ namespace App\Tools;
 use App\Database\Exceptions\DatabaseException;
 use App\Database\Repositories\PageRepository;
 use App\Database\Repositories\UserRepository;
-use RuntimeException;
+use JsonException;
+use ZipArchive;
 
 class ExportData extends AbstractCommand
 {
@@ -18,21 +19,28 @@ class ExportData extends AbstractCommand
     /**
      * @param string[] $args
      * @throws DatabaseException
-     * @throws RuntimeException
+     * @throws JsonException
      */
     public function __invoke(array $args): void
     {
-        $folder = $args[0]
-            ?? throw new RuntimeException('Target folder not specified.');
+        $fileName = sprintf('archive-%s.zip', strftime('%Y%m%d-%H%M'));
 
-        self::exportPages($folder);
-        self::exportUsers($folder);
+        $zip = new ZipArchive();
+        $zip->open($fileName, ZipArchive::CREATE);
+
+        self::exportPages($zip);
+        self::exportUsers($zip);
+
+        $zip->close();
+
+        fprintf(STDOUT, "Wrote %s\n", $fileName);
     }
 
     /**
      * @throws DatabaseException
+     * @throws JsonException
      */
-    private function exportPages(string $folder): void
+    private function exportPages(ZipArchive $zip): void
     {
         foreach ($this->pages->iter() as $item) {
             $data = [
@@ -40,11 +48,12 @@ class ExportData extends AbstractCommand
                 'data' => $item->toArray(),
             ];
 
-            $json = json_encode($data);
-            $key = sha1($item->getId());
+            $json = json_encode($data, \JSON_THROW_ON_ERROR);
 
-            $fileName = sprintf("%s/page_%s.json", $folder, $key);
-            file_put_contents($fileName, $json);
+            $key = sha1($item->getId());
+            $fileName = sprintf('pages/%s.json', $key);
+
+            $zip->addFromString($fileName, $json);
 
             fprintf(STDOUT, "Wrote page %s as %s\n", $item->getId(), $fileName);
         }
@@ -52,8 +61,9 @@ class ExportData extends AbstractCommand
 
     /**
      * @throws DatabaseException
+     * @throws JsonException
      */
-    private function exportUsers(string $folder): void
+    private function exportUsers(ZipArchive $zip): void
     {
         foreach ($this->users->iter() as $item) {
             $data = [
@@ -61,11 +71,12 @@ class ExportData extends AbstractCommand
                 'data' => $item->toArray(),
             ];
 
-            $json = json_encode($data);
-            $key = sha1($item->getId());
+            $json = json_encode($data, \JSON_THROW_ON_ERROR);
 
-            $fileName = sprintf("%s/user_%s.json", $folder, $key);
-            file_put_contents($fileName, $json);
+            $key = sha1($item->getId());
+            $fileName = sprintf("users/%s.json", $key);
+
+            $zip->addFromString($fileName, $json);
 
             fprintf(STDOUT, "Wrote user %s as %s\n", $item->getId(), $fileName);
         }
