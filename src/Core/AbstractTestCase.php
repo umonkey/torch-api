@@ -6,7 +6,6 @@ namespace App\Core;
 
 use App\Core\Config\Environment;
 use App\Core\Testing\FixtureFactory;
-use DI\ContainerBuilder;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
@@ -51,10 +50,11 @@ abstract class AbstractTestCase extends TestCase
         $this->fixtures = $this->container->get(FixtureFactory::class);
     }
 
+    /**
+     * @throws ContainerExceptionInterface
+     */
     private function getContainer(): ContainerInterface
     {
-        $cb = new ContainerBuilder();
-        $cb->addDefinitions(include __DIR__ . '/../../config/dependencies.php');
-        return $cb->build();
+        return new Container();
     }
 }

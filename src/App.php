@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Core\Container;
 use DI\Bridge\Slim\Bridge;
-use DI\ContainerBuilder;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\App as SlimApp;
 
@@ -14,16 +15,20 @@ use Slim\App as SlimApp;
  */
 class App
 {
+    /**
+     * @throws ContainerExceptionInterface
+     */
     public static function run(): void
     {
         self::getApp()->run();
     }
 
+    /**
+     * @throws ContainerExceptionInterface
+     */
     public static function getApp(): SlimApp
     {
-        $cb = new ContainerBuilder();
-        $cb->addDefinitions(include __DIR__ . '/../config/dependencies.php');
-        $container = $cb->build();
+        $container = new Container();
 
         $app = Bridge::create($container);
         $container->set(ResponseFactoryInterface::class, $app->getResponseFactory());
