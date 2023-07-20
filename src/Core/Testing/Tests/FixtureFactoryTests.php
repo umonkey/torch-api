@@ -6,6 +6,7 @@ namespace App\Core\Testing\Tests;
 
 use App\Core\AbstractTestCase;
 use App\Core\Testing\FixtureFactory;
+use PHPUnit\Framework\AssertionFailedError;
 use RuntimeException;
 
 class FixtureFactoryTests extends AbstractTestCase
@@ -29,6 +30,12 @@ class FixtureFactoryTests extends AbstractTestCase
         self::assertNotNull($path);
 
         $this->factory->processFile($path);
+    }
+
+    public function testBadFixture(): void
+    {
+        $this->expectException(AssertionFailedError::class);
+        $this->fixture('002.yaml');
     }
 
     protected function setUp(): void
